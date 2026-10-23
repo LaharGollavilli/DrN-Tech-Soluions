@@ -354,8 +354,8 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
               isDarkMode ? 'text-slate-300' : 'text-slate-600'
             }`}>
               Email your CV and portfolio to{' '}
-              <a href="mailto:careers@dharanitechsolutions.com" className="font-semibold text-sky-600 hover:underline">
-                careers@dharanitechsolutions.com
+              <a href="mailto:careers@drntechsolutions.in" className="font-semibold text-sky-600 hover:underline">
+                careers@drntechsolutions.in
               </a>{' '}
               or bring your printed resume to our Visakhapatnam engineering office.
             </p>
@@ -363,7 +363,7 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
             <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono">
               <div className={`flex items-center gap-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                 <Phone className="w-3.5 h-3.5 text-sky-600" />
-                <span>Mobile: +91 898529579</span>
+                <span>Mobile: +91 8985829579</span>
               </div>
               <div className={`flex items-center gap-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                 <Phone className="w-3.5 h-3.5 text-sky-600" />
@@ -374,7 +374,7 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
             <div className={`flex items-start gap-1.5 text-xs pt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
               <MapPin className="w-4 h-4 text-sky-600 flex-shrink-0 mt-0.5" />
               <span>
-                Kurmanpalem, Duvvada Railway Station Road, Balaji Nagar, Road No. 5, Pin Code: 530046, Visakhapatnam, Andhra Pradesh
+                Kurmannapalem, Duvvada Railway Station Road, Balaji Nagar, Road number-5, Pin code: 530046, Visakhapatnam, Andhra Pradesh
               </span>
             </div>
           </div>
@@ -387,7 +387,7 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
               Submit Express Application
             </button>
             <a
-              href="mailto:careers@dharanitechsolutions.com?subject=Application%20for%20BIM%20Role%20in%20Vizag"
+              href="mailto:careers@drntechsolutions.in?subject=Application%20for%20BIM%20Role%20in%20Vizag"
               className={`w-full px-5 py-3 rounded-xl font-bold text-xs text-center border transition-all ${
                 isDarkMode 
                   ? 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700' 
@@ -402,13 +402,17 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
 
       {/* Express Application Modal */}
       {showApplyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className={`relative w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-2xl border ${
-            isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+            isDarkMode 
+              ? 'bg-slate-900 border-slate-700 text-white shadow-cyan-950/50' 
+              : 'bg-white border-slate-200 text-slate-900 shadow-slate-300'
           }`}>
             <button
               onClick={() => setShowApplyModal(false)}
-              className="absolute top-5 right-5 p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              className={`absolute top-5 right-5 p-2 rounded-lg transition-colors cursor-pointer ${
+                isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100'
+              }`}
             >
               <X className="w-5 h-5" />
             </button>
@@ -416,19 +420,23 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
             {!submitted ? (
               <form onSubmit={handleApplySubmit} className="space-y-4">
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-wider font-bold text-sky-600">
+                  <span className={`text-xs font-mono uppercase tracking-wider font-bold ${
+                    isDarkMode ? 'text-cyan-400' : 'text-sky-600'
+                  }`}>
                     CAREER APPLICATION
                   </span>
                   <h3 className="text-xl font-bold mt-1">
                     Apply for: {appliedJobTitle}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                     Visakhapatnam (Vizag) Engineering Office
                   </p>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono uppercase block mb-1">
+                  <label className={`text-xs font-mono font-bold uppercase block mb-1.5 ${
+                    isDarkMode ? 'text-slate-300' : 'text-slate-700'
+                  }`}>
                     Full Name *
                   </label>
                   <input
@@ -437,13 +445,19 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                     value={candidateName}
                     onChange={(e) => setCandidateName(e.target.value)}
                     placeholder="e.g. K. Rajesh"
-                    className="w-full px-3 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 focus:outline-none focus:border-sky-500"
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 ${
+                      isDarkMode 
+                        ? 'bg-slate-800/90 border-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500/40 focus:border-cyan-400' 
+                        : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:ring-sky-500/40 focus:border-sky-500'
+                    }`}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs font-mono uppercase block mb-1">
+                    <label className={`text-xs font-mono font-bold uppercase block mb-1.5 ${
+                      isDarkMode ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
                       Phone Number *
                     </label>
                     <input
@@ -451,13 +465,19 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                       required
                       value={candidatePhone}
                       onChange={(e) => setCandidatePhone(e.target.value)}
-                      placeholder="+91 98765 43210"
-                      className="w-full px-3 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 focus:outline-none focus:border-sky-500"
+                      placeholder="+91 89858 29579"
+                      className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 ${
+                        isDarkMode 
+                          ? 'bg-slate-800/90 border-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500/40 focus:border-cyan-400' 
+                          : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:ring-sky-500/40 focus:border-sky-500'
+                      }`}
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-mono uppercase block mb-1">
+                    <label className={`text-xs font-mono font-bold uppercase block mb-1.5 ${
+                      isDarkMode ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
                       Email Address
                     </label>
                     <input
@@ -465,24 +485,42 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                       value={candidateEmail}
                       onChange={(e) => setCandidateEmail(e.target.value)}
                       placeholder="rajesh@gmail.com"
-                      className="w-full px-3 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 focus:outline-none focus:border-sky-500"
+                      className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 ${
+                        isDarkMode 
+                          ? 'bg-slate-800/90 border-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500/40 focus:border-cyan-400' 
+                          : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:ring-sky-500/40 focus:border-sky-500'
+                      }`}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono uppercase block mb-1">
+                  <label className={`text-xs font-mono font-bold uppercase block mb-1.5 ${
+                    isDarkMode ? 'text-slate-300' : 'text-slate-700'
+                  }`}>
                     Experience Level
                   </label>
                   <select
                     value={candidateExp}
                     onChange={(e) => setCandidateExp(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 focus:outline-none focus:border-sky-500"
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 ${
+                      isDarkMode 
+                        ? 'bg-slate-800 border-slate-700 text-white focus:ring-cyan-500/40 focus:border-cyan-400' 
+                        : 'bg-white border-slate-300 text-slate-900 focus:ring-sky-500/40 focus:border-sky-500'
+                    }`}
                   >
-                    <option value="Fresher (Civil / Arch)">Fresher (Civil Engineering / Arch / Diploma)</option>
-                    <option value="1-2 Years Experience">1 to 2 Years Experience (AutoCAD / Revit)</option>
-                    <option value="3-5 Years Experience">3 to 5 Years Experience (BIM Modeler / Drafter)</option>
-                    <option value="5+ Years Experience">5+ Years Senior Modeling Experience</option>
+                    <option value="Fresher (Civil / Arch)" className={isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                      Fresher (Civil Engineering / Arch / Diploma)
+                    </option>
+                    <option value="1-2 Years Experience" className={isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                      1 to 2 Years Experience (AutoCAD / Revit)
+                    </option>
+                    <option value="3-5 Years Experience" className={isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                      3 to 5 Years Experience (BIM Modeler / Drafter)
+                    </option>
+                    <option value="5+ Years Experience" className={isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                      5+ Years Senior Modeling Experience
+                    </option>
                   </select>
                 </div>
 
@@ -492,15 +530,19 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                     id="vizag-residence"
                     checked={isVizagResident}
                     onChange={(e) => setIsVizagResident(e.target.checked)}
-                    className="w-4 h-4 rounded accent-sky-600"
+                    className="w-4 h-4 rounded accent-sky-600 cursor-pointer"
                   />
-                  <label htmlFor="vizag-residence" className="text-xs cursor-pointer text-slate-700 dark:text-slate-300">
+                  <label htmlFor="vizag-residence" className={`text-xs cursor-pointer font-medium select-none ${
+                    isDarkMode ? 'text-slate-300' : 'text-slate-700'
+                  }`}>
                     I currently reside in or around Visakhapatnam (Vizag)
                   </label>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono uppercase block mb-1">
+                  <label className={`text-xs font-mono font-bold uppercase block mb-1.5 ${
+                    isDarkMode ? 'text-slate-300' : 'text-slate-700'
+                  }`}>
                     Software Skills / Portfolio Link / Brief Note
                   </label>
                   <textarea
@@ -508,7 +550,11 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                     value={candidateNotes}
                     onChange={(e) => setCandidateNotes(e.target.value)}
                     placeholder="Mention your AutoCAD, Revit proficiency, or Google Drive portfolio link..."
-                    className="w-full p-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 focus:outline-none focus:border-sky-500"
+                    className={`w-full p-3 rounded-xl border text-xs sm:text-sm font-medium transition-colors focus:outline-none focus:ring-2 ${
+                      isDarkMode 
+                        ? 'bg-slate-800/90 border-slate-700 text-white placeholder-slate-400 focus:ring-cyan-500/40 focus:border-cyan-400' 
+                        : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:ring-sky-500/40 focus:border-sky-500'
+                    }`}
                   />
                 </div>
 
@@ -516,13 +562,15 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowApplyModal(false)}
-                    className="px-4 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                    className={`px-4 py-2 rounded-xl text-xs font-medium cursor-pointer transition-colors ${
+                      isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-700'
+                    }`}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition-all shadow-sm"
+                    className="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition-all shadow-sm cursor-pointer"
                   >
                     Submit Application
                   </button>

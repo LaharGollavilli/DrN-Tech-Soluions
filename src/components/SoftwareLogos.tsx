@@ -246,3 +246,45 @@ export const DynamoLogo: React.FC<LogoProps> = ({ className = "w-10 h-10" }) => 
     <rect width="64" height="64" rx="14" stroke="#0D9488" strokeOpacity="0.3" strokeWidth="1" />
   </svg>
 );
+
+/**
+ * Autodesk ReCap Pro Official Product Icon
+ * Uses the authentic Autodesk ReCap Pro emblem provided by the user (/assets/aistudio/recap_logo.png).
+ */
+export const RecapLogo: React.FC<LogoProps> = ({ className = "w-10 h-10" }) => (
+  <svg 
+    viewBox="0 0 64 64" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg" 
+    className={className}
+    aria-label="Autodesk ReCap Pro"
+  >
+    <defs>
+      <linearGradient id="recap-card-bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FFFFFF" />
+        <stop offset="100%" stopColor="#F8FAFC" />
+      </linearGradient>
+      <clipPath id="recap-clip">
+        <rect width="64" height="64" rx="14" />
+      </clipPath>
+    </defs>
+    
+    {/* Clean White Rounded Card Backdrop */}
+    <rect width="64" height="64" rx="14" fill="url(#recap-card-bg)" />
+    
+    {/* Authentic Autodesk ReCap Pro Asset */}
+    <g clipPath="url(#recap-clip)">
+      <image 
+        href="/assets/aistudio/recap_logo.png" 
+        x="6" 
+        y="6" 
+        width="52" 
+        height="52" 
+        preserveAspectRatio="xMidYMid meet" 
+      />
+    </g>
+
+    <rect width="64" height="64" rx="14" stroke="#E2E8F0" strokeWidth="1.2" />
+    <rect width="64" height="64" rx="14" stroke="#A21CAF" strokeOpacity="0.3" strokeWidth="1" />
+  </svg>
+);

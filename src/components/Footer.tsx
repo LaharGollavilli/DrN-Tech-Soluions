@@ -42,16 +42,16 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
                 }`}>
                   DHARANI TECH SOLUTIONS
                 </span>
-                <span className={`text-[10px] font-mono tracking-widest uppercase -mt-0.5 ${
+                <span className={`text-[10px] font-mono tracking-wider uppercase -mt-0.5 ${
                   isDarkMode ? 'text-cyan-400' : 'text-sky-600'
                 }`}>
-                  PLANNING • 3D DESIGN • BIM ARCH & STR • AUTOCAD
+                  BIM MODELING • SCAN-TO-BIM • CAD-TO-BIM • AUTOCAD WORKS
                 </span>
               </div>
             </div>
 
             <p className={`text-xs leading-relaxed max-w-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-              Professional engineering consultancy delivering Building Planning, 3D Model Design, BIM Architecture & Structure (LOD 100–400), and complete AutoCAD 2D & 3D Drafting Works for architects, civil engineers, and contractors.
+              Professional engineering consultancy delivering BIM Architecture & Structure (LOD 100–400), Scan-to-BIM (point cloud conversion), CAD-to-BIM, and complete AutoCAD 2D & 3D Drafting Works for architects, civil engineers, and contractors.
             </p>
 
             {/* Office Contact Details */}
@@ -73,16 +73,12 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
               <div className={`flex items-center gap-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                 <Mail className={`w-4 h-4 flex-shrink-0 ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
                 <div className="font-mono flex flex-wrap gap-2">
-                  <a href="mailto:drntechsolutions09@gmail.com" className="hover:underline font-semibold text-sky-600 dark:text-cyan-400">
-                    drntechsolutions09@gmail.com
+                  <a href="mailto:info@drntechsolutions.in" className="hover:underline font-semibold text-sky-600 dark:text-cyan-400">
+                    info@drntechsolutions.in
                   </a>
                   <span>•</span>
-                  <a href="mailto:contact@dharanitechsolutions.com" className="hover:underline">
-                    contact@dharanitechsolutions.com
-                  </a>
-                  <span>•</span>
-                  <a href="mailto:careers@dharanitechsolutions.com" className="hover:underline">
-                    careers@dharanitechsolutions.com
+                  <a href="mailto:careers@drntechsolutions.in" className="hover:underline text-slate-700 dark:text-slate-300">
+                    careers@drntechsolutions.in
                   </a>
                 </div>
               </div>
@@ -270,7 +266,7 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
           <p className="max-w-2xl leading-relaxed">
             &copy; {new Date().getFullYear()} Dharani Tech Solutions. All rights reserved. 
             <span className={`block mt-1 text-[11px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-              * Notice: Dharani Tech Solutions specializes strictly in virtual 3D BIM model authoring, building planning, 3D design, and AutoCAD drafting. We do not provide 3D laser scanning, LiDAR, or field surveying services.
+              * Notice: Dharani Tech Solutions specializes in virtual 3D BIM model authoring, Scan-to-BIM (point cloud conversion), CAD-to-BIM, building planning, 3D visualization, and AutoCAD drafting services.
             </span>
           </p>
 
@@ -278,11 +274,11 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
             <div className="flex items-center gap-2 pr-2 border-r border-slate-300 dark:border-slate-800">
               {/* WhatsApp Small Circular Symbol */}
               <a
-                href="https://wa.me/91898529579?text=Hello%20Dharani%20Tech%20Solutions%2C%20I%20would%20like%20to%20inquire%20about%20your%20BIM%20and%20engineering%20services."
+                href="https://wa.me/918985829579?text=Hello%20Dharani%20Tech%20Solutions%2C%20I%20would%20like%20to%20inquire%20about%20your%20BIM%20and%20engineering%20services."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-7 h-7 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center transition-transform hover:scale-110 shadow-xs"
-                title="Message us on WhatsApp (+91 898529579)"
+                title="Message us on WhatsApp (+91 8985829579)"
                 aria-label="WhatsApp"
               >
                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -306,13 +302,13 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
 
               {/* Email Small Circular Symbol */}
               <a
-                href="mailto:contact@dharanitechsolutions.com"
+                href="mailto:info@drntechsolutions.in"
                 className={`w-7 h-7 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-xs border ${
                   isDarkMode 
                     ? 'bg-slate-900 border-slate-700 text-cyan-400 hover:text-white' 
                     : 'bg-white border-slate-300 text-sky-600 hover:bg-slate-100'
                 }`}
-                title="Send Email"
+                title="Send Email (info@drntechsolutions.in)"
                 aria-label="Email"
               >
                 <Mail className="w-3.5 h-3.5" />

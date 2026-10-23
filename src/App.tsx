@@ -38,6 +38,15 @@ export default function App() {
     setIsDarkMode((prev) => !prev);
   };
 
+  // Synchronize 'dark' class on html root element for Tailwind dark: variants
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   const navigateToView = (view: 'home' | 'careers') => {
     setActiveView(view);
     if (view === 'careers') {

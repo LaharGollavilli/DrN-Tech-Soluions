@@ -16,7 +16,8 @@ import {
   AccLogo,
   Bim360Logo,
   AutoCadLogo,
-  DynamoLogo
+  DynamoLogo,
+  RecapLogo
 } from './SoftwareLogos';
 
 export const renderSoftwareLogo = (id: string, className?: string) => {
@@ -25,6 +26,8 @@ export const renderSoftwareLogo = (id: string, className?: string) => {
       return <RevitLogo className={className} />;
     case 'navisworks':
       return <NavisworksLogo className={className} />;
+    case 'recap':
+      return <RecapLogo className={className} />;
     case 'acc':
       return <AccLogo className={className} />;
     case 'bim360':
@@ -81,6 +84,20 @@ const softwares: SoftwareItem[] = [
     deliverables: ['Federated Coordination Models (.nwd, .nwf)', 'Clash Detection Matrix & Heatmaps', 'Resolution Action Reports (PDF/Excel)', 'Hard & Soft Clearance Verification'],
     keyBenefit: 'Identifies design interferences in the virtual environment before concrete is poured, eliminating expensive site rework.',
     formats: ['.NWD', '.NWF', '.NWC', '.BCF']
+  },
+  {
+    id: 'recap',
+    name: 'Autodesk ReCap Pro',
+    shortName: 'ReCap Pro',
+    vendor: 'Autodesk',
+    category: 'Reality Capture & Scan-to-BIM Point Cloud Processing',
+    iconBg: 'from-fuchsia-600 to-purple-800',
+    badgeColor: 'text-fuchsia-400 border-fuchsia-500/30 bg-fuchsia-500/10',
+    description: 'The industry-standard platform for registering 3D laser scans, filtering noise, and converting massive point clouds into indexed models for Revit modeling.',
+    howWeUseIt: 'We ingest raw point cloud scans from terrestrial scanners (Faro, Leica, Trimble) and mobile LiDAR. In ReCap Pro, we register scan stations, clean non-structural noise, lock real-world survey coordinates, and export indexed .RCP/.RCS files directly into Revit for millimeter-accurate Scan-to-BIM modeling.',
+    deliverables: ['Indexed Point Cloud Packages (.rcp, .rcs)', 'Target & Sphere Registration Quality Reports', 'Cleaned As-Built Point Cloud Overlays', 'Sectioned Reality Capture Datasets'],
+    keyBenefit: 'Enables millimeter-accurate as-built Revit modeling from raw point clouds, completely eliminating manual measurement errors on site.',
+    formats: ['.RCP', '.RCS', '.E57', '.LAS', '.PTS']
   },
   {
     id: 'acc',
@@ -169,14 +186,14 @@ export const SoftwareEcosystem: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMo
       </div>
 
       {/* Software Badges Grid - Clickable & Interactive */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 mb-8">
         {softwares.map((sw) => {
           const isSelected = selectedSoftware.id === sw.id;
           return (
             <button
               key={sw.id}
               onClick={() => setSelectedSoftware(sw)}
-              className={`p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between relative group ${
+              className={`p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between h-full min-h-[148px] relative group ${
                 isSelected
                   ? isDarkMode
                     ? 'bg-slate-900 border-cyan-500 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500'

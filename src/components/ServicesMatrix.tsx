@@ -15,7 +15,8 @@ import {
   Laptop2,
   Workflow,
   Compass,
-  FileText
+  FileText,
+  Scan
 } from 'lucide-react';
 
 const ICONS: Record<string, React.ElementType> = {
@@ -26,7 +27,8 @@ const ICONS: Record<string, React.ElementType> = {
   FileCode2,
   BarChart3,
   Compass,
-  FileText
+  FileText,
+  Scan
 };
 
 interface ServicesMatrixProps {
@@ -47,11 +49,11 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
 
   return (
     <div className="w-full">
-      {/* Discipline Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none">
+      {/* Discipline Filter Tabs - Uniformly Aligned */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none w-full">
         <button
           onClick={() => setActiveTab('all')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border ${
+          className={`h-9 shrink-0 px-4 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border flex items-center justify-center ${
             activeTab === 'all'
               ? 'bg-sky-600 text-white border-sky-600 shadow-xs'
               : isDarkMode 
@@ -59,7 +61,7 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
                 : 'bg-white text-slate-700 hover:text-slate-950 border-slate-200 hover:bg-slate-50 shadow-xs'
           }`}
         >
-          All Disciplines (6)
+          All Disciplines ({BIM_SERVICES.length})
         </button>
 
         {BIM_SERVICES.map((srv) => {
@@ -69,7 +71,7 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
             <button
               key={srv.id}
               onClick={() => setActiveTab(srv.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-medium flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer border ${
+              className={`h-9 shrink-0 px-3.5 rounded-xl text-xs font-medium flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer border ${
                 isActive
                   ? 'bg-sky-600 text-white border-sky-600 shadow-xs font-semibold'
                   : isDarkMode 
@@ -77,7 +79,7 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
                     : 'bg-white text-slate-700 hover:text-slate-950 border-slate-200 hover:bg-slate-50 shadow-xs'
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
+              <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-white' : isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
               <span>{srv.title}</span>
             </button>
           );

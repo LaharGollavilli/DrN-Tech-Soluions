@@ -1,8 +1,8 @@
 import React from 'react';
 import { TRUST_METRICS } from '../data/bimData';
-import { ShieldCheck, Crosshair, TrendingDown, Cpu, Sparkles } from 'lucide-react';
+import { ShieldCheck, Crosshair, TrendingDown, Scan, Sparkles } from 'lucide-react';
 
-const METRIC_ICONS = [ShieldCheck, Crosshair, TrendingDown, Cpu];
+const METRIC_ICONS = [ShieldCheck, Crosshair, TrendingDown, Scan];
 
 interface MetricsBarProps {
   isDarkMode?: boolean;

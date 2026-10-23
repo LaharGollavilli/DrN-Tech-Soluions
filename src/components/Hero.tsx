@@ -39,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
             <span className={`text-[10.5px] sm:text-xs font-mono font-bold tracking-wide uppercase text-center leading-tight ${
               isDarkMode ? 'text-cyan-300' : 'text-sky-800'
             }`}>
-              PLANNING • 3D DESIGN • BIM ARCH & STR • AUTOCAD WORKS
+              BIM MODELING • SCAN-TO-BIM • CAD-TO-BIM • AUTOCAD WORKS
             </span>
           </div>
 
@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
           <h1 className={`text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] ${
             isDarkMode ? 'text-white' : 'text-slate-900'
           }`}>
-            Building Planning, 3D Model Design &{' '}
+            Virtual Design, Scan-to-BIM &{' '}
             <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 bg-clip-text text-transparent">
               BIM Architecture & Structure
@@ -59,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
           <p className={`mt-5 sm:mt-6 text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed ${
             isDarkMode ? 'text-slate-300' : 'text-slate-600'
           }`}>
-            We provide comprehensive building planning, 3D architectural visualization, LOD 100–400 Autodesk Revit modeling for architecture and structure, and complete AutoCAD 2D/3D drafting and shop drawings for architects, civil engineers, and contractors.
+            We deliver high-precision Autodesk Revit BIM modeling (LOD 100–400), Scan-to-BIM point cloud processing, CAD-to-BIM conversions, building planning, and complete AutoCAD 2D & 3D drafting works for architects, civil engineers, and contractors.
           </p>
 
           {/* Clean Action Buttons */}

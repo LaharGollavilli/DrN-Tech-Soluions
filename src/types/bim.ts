@@ -3,12 +3,13 @@ export type Discipline =
   | '3d-model-design'
   | 'bim-arch-structure'
   | 'autocad-works'
-  | 'architectural'
-  | 'structural'
+  | 'scan-to-bim'
+  | 'cad-to-bim'
   | 'interior-design'
   | 'shop-drawings'
   | 'clash-coordination'
-  | 'cad-to-bim'
+  | 'architectural'
+  | 'structural'
   | 'quantity-takeoff';
 
 export interface ServiceDetail {

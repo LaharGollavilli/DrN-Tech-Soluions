@@ -29,12 +29,13 @@ const PRESET_QUERIES = [
 ];
 
 const KNOWLEDGE_BASE: Record<string, string> = {
-  "training": "Dharani Tech Solutions offers comprehensive REVIT & BIM TRAINING in Visakhapatnam for Civil & Architecture students (Diploma, B.Tech & B.E.) and working construction professionals. Features include: 100% Practical Training on live projects, Industry Expert Mentors, 2D CAD to 3D BIM transition, Placement Assistance & Interview Prep, and Flexible Batches (Weekday & Weekend). Contact our training desk at +91 8985829579 or email drntechsolutions09@gmail.com to register for a FREE demo class!",
+  "training": "Dharani Tech Solutions offers comprehensive REVIT & BIM TRAINING in Visakhapatnam for Civil & Architecture students (Diploma, B.Tech & B.E.) and working construction professionals. Features include: 100% Practical Training on live projects, Industry Expert Mentors, 2D CAD to 3D BIM transition, Placement Assistance & Interview Prep, and Flexible Batches (Weekday & Weekend). Contact our training desk at +91 8985829579 or email info@drntechsolutions.in to register for a FREE demo class!",
   "coordinates": "We establish real-world project geodetic benchmarks in Autodesk Revit, locking the Survey Point and Project Base Point with true Northing/Easting coordinates and True North angle rotation. Linked AutoCAD DWG files are positioned via Shared Coordinates to eliminate rotation and level drift across structural and architectural models.",
   "parameters": "Our Revit families are enriched with UniFormat II and OmniClass Table 21 classifications, material fire/acoustic ratings, structural concrete grades (M25 to M40), rebar specifications (Fe500D), and dimensional parameters. This ensures direct bidirectional extraction into Bill of Quantities (BOQ).",
   "clash": "Using Autodesk Navisworks Manage, we execute multi-tier interference audits prioritizing trade gravity lines, HVAC ducts, structural concrete/steel frames, and cable trays. We filter false-positive insulation touchpoints and publish tracked BCF (BIM Collaboration Format) issue logs for weekly coordination reviews.",
   "bbs": "Yes! We model parametric 3D structural reinforcement down to individual bar mark shapes, hook bends, and lap lengths adhering to IS 456 / SP 34 / ACI 318 standards. Fabrication-ready Bar Bending Schedules (BBS) with total tonnage breakdowns are dynamically extracted directly from Revit.",
-  "general": "Dharani Tech Solutions delivers virtual building planning, 3D architectural visualization, LOD 100–400 Revit BIM modeling, and professional Revit & BIM Training from our Visakhapatnam engineering office. How can our modeling engineers or trainers assist you?"
+  "scantobim": "Yes! Dharani Tech Solutions handles advanced Scan-to-BIM and CAD-to-BIM modeling. We convert 3D laser scan point clouds (.rcp, .rcs, .e57, .las) and 2D CAD DWG drawings into parametric Revit models (LOD 200–400) for as-built verification, renovations, and clash-free execution. Contact +91 8985829579 or info@drntechsolutions.in for a custom engineering quote.",
+  "general": "Dharani Tech Solutions delivers virtual building planning, 3D architectural visualization, LOD 100–400 Revit BIM modeling, Scan-to-BIM point cloud processing, CAD-to-BIM conversion, and professional Revit & BIM Training from our Visakhapatnam engineering office. How can our modeling engineers or trainers assist you?"
 };
 
 export const TechnicalAdvisorModal: React.FC<TechnicalAdvisorModalProps> = ({ 
@@ -85,6 +86,8 @@ export const TechnicalAdvisorModal: React.FC<TechnicalAdvisorModalProps> = ({
 
       if (lower.includes('training') || lower.includes('course') || lower.includes('demo') || lower.includes('class') || lower.includes('student') || lower.includes('learn')) {
         reply = KNOWLEDGE_BASE.training;
+      } else if (lower.includes('scan') || lower.includes('point cloud') || lower.includes('laser') || lower.includes('as-built') || lower.includes('cad to bim')) {
+        reply = KNOWLEDGE_BASE.scantobim;
       } else if (lower.includes('coordinate') || lower.includes('north') || lower.includes('shared') || lower.includes('benchmark')) {
         reply = KNOWLEDGE_BASE.coordinates;
       } else if (lower.includes('parameter') || lower.includes('omniclass') || lower.includes('family') || lower.includes('metadata')) {
@@ -94,7 +97,7 @@ export const TechnicalAdvisorModal: React.FC<TechnicalAdvisorModalProps> = ({
       } else if (lower.includes('bbs') || lower.includes('rebar') || lower.includes('bending') || lower.includes('reinforcement')) {
         reply = KNOWLEDGE_BASE.bbs;
       } else if (lower.includes('office') || lower.includes('vizag') || lower.includes('address') || lower.includes('contact') || lower.includes('phone')) {
-        reply = "Our engineering desk & training studio is in Visakhapatnam (Vizag) at Kurmannapalem, Duvvada Railway Station Road, Balaji Nagar, Road number-5 (PIN: 530046). Direct Contact: Landline 0891-4630073, Mobile/WhatsApp +91 8985829579, Email: drntechsolutions09@gmail.com.";
+        reply = "Our engineering desk & training studio is in Visakhapatnam (Vizag) at Kurmannapalem, Duvvada Railway Station Road, Balaji Nagar, Road number-5 (PIN: 530046). Direct Contact: Landline 0891-4630073, Mobile/WhatsApp +91 8985829579, Email: info@drntechsolutions.in.";
       }
 
       const aiMsg: ChatMessage = {

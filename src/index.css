@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
@@ -58,4 +59,46 @@
   position: fixed;
   inset: 0;
   z-index: 1;
+}
+
+/* Dedicated Clean Print Stylesheet for Project Scoping Parameters */
+@media print {
+  /* Hide the rest of the website */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Make only the inquiry summary container visible */
+  #printable-inquiry-summary,
+  #printable-inquiry-summary * {
+    visibility: visible;
+  }
+
+  #printable-inquiry-summary {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 2px solid #0284c7 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    z-index: 999999 !important;
+  }
+
+  /* Print exact background colors and borders */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide print buttons and back buttons in the printout */
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }

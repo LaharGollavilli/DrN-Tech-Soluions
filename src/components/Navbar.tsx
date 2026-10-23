@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onNavigateView('home');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center gap-3 group cursor-pointer text-left mr-6 lg:mr-8 xl:mr-12 shrink-0"
+          className="flex items-center gap-3 group cursor-pointer text-left mr-3 xl:mr-6 shrink-0"
         >
           <div className={`relative p-1 rounded-xl border transition-all duration-300 shadow-sm shrink-0 ${
             isDarkMode 
@@ -92,18 +92,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className={`text-[9px] sm:text-[10px] font-mono tracking-wider uppercase -mt-0.5 transition-colors whitespace-nowrap ${
               isDarkMode ? 'text-slate-400' : 'text-slate-500'
             }`}>
-              PLANNING • 3D DESIGN • BIM ARCH & STR • AUTOCAD
+              BIM MODELING • SCAN-TO-BIM • CAD-TO-BIM • AUTOCAD WORKS
             </span>
           </div>
         </button>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5 shrink-0">
+        {/* Desktop Nav Links - Perfectly Aligned with Uniform Heights */}
+        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2.5 shrink-0">
           <button
             onClick={() => handleNavClick('#services')}
-            className={`text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-semibold flex items-center transition-colors cursor-pointer whitespace-nowrap ${
               activeView === 'home'
-                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400' : 'text-slate-700 hover:text-sky-600'
+                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400 hover:bg-slate-800/50' : 'text-slate-700 hover:text-sky-600 hover:bg-slate-100/70'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -113,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* BIM Training Academy Link with Admissions Open Badge */}
           <button
             onClick={() => handleNavClick('#bim-training')}
-            className={`text-xs font-bold transition-all px-2.5 py-1 rounded-xl flex items-center gap-1.5 cursor-pointer border shrink-0 ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border shrink-0 ${
               isDarkMode
                 ? 'bg-amber-950/30 border-amber-500/40 text-amber-300 hover:border-amber-400'
                 : 'bg-amber-50 border-amber-200 text-amber-800 hover:bg-amber-100'
@@ -127,9 +127,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNavClick('#software-stack')}
-            className={`text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-semibold flex items-center transition-colors cursor-pointer whitespace-nowrap ${
               activeView === 'home'
-                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400' : 'text-slate-700 hover:text-sky-600'
+                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400 hover:bg-slate-800/50' : 'text-slate-700 hover:text-sky-600 hover:bg-slate-100/70'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -138,9 +138,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNavClick('#lod-spectrum')}
-            className={`text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-semibold flex items-center transition-colors cursor-pointer whitespace-nowrap ${
               activeView === 'home'
-                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400' : 'text-slate-700 hover:text-sky-600'
+                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400 hover:bg-slate-800/50' : 'text-slate-700 hover:text-sky-600 hover:bg-slate-100/70'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -149,9 +149,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNavClick('#quote-estimator')}
-            className={`text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-semibold flex items-center transition-colors cursor-pointer whitespace-nowrap ${
               activeView === 'home'
-                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400' : 'text-slate-700 hover:text-sky-600'
+                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400 hover:bg-slate-800/50' : 'text-slate-700 hover:text-sky-600 hover:bg-slate-100/70'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -160,9 +160,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => handleNavClick('#standards-faq')}
-            className={`text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap hidden xl:inline-block ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-semibold items-center transition-colors cursor-pointer whitespace-nowrap hidden xl:flex ${
               activeView === 'home'
-                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400' : 'text-slate-700 hover:text-sky-600'
+                ? isDarkMode ? 'text-slate-200 hover:text-cyan-400 hover:bg-slate-800/50' : 'text-slate-700 hover:text-sky-600 hover:bg-slate-100/70'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -172,7 +172,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Dedicated Careers Tab with Active Hiring Tag */}
           <button
             onClick={() => handleNavClick('#careers')}
-            className={`text-xs font-bold transition-all px-2.5 py-1.5 rounded-xl flex items-center gap-1.5 cursor-pointer border shrink-0 ${
+            className={`h-9 px-2.5 xl:px-3 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border shrink-0 ${
               activeView === 'careers'
                 ? 'bg-sky-600 text-white border-sky-600 shadow-xs'
                 : isDarkMode
@@ -188,34 +188,34 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </nav>
 
-        {/* Right Action Container: Single Theme Toggle & Proposal CTA */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        {/* Right Action Container: Single Theme Toggle & Request Proposal CTA - Perfectly Aligned (h-10) */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Single Theme Toggle Button */}
           <button
             onClick={onToggleTheme}
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+            className={`h-9 w-9 sm:h-10 sm:w-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${
               isDarkMode 
-                ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white' 
-                : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
+                ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700' 
+                : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300'
             }`}
           >
             {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-sky-600" />}
           </button>
 
-          {/* Proposal CTA Button */}
+          {/* Request Proposal CTA Button - Precision Aligned */}
           <button
             onClick={() => handleNavClick('#quote-estimator')}
-            className="hidden sm:inline-flex px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-all shadow-sm shadow-sky-600/20 items-center gap-1.5 cursor-pointer hover:scale-102"
+            className="hidden sm:inline-flex h-9 sm:h-10 px-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-all shadow-sm shadow-sky-600/20 items-center justify-center gap-1.5 cursor-pointer hover:scale-102 shrink-0"
           >
-            <span>Request Proposal</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span className="whitespace-nowrap">Request Proposal</span>
+            <ArrowRight className="w-3.5 h-3.5 shrink-0" />
           </button>
 
           {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-xl border cursor-pointer ${
+            className={`lg:hidden h-9 w-9 sm:h-10 sm:w-10 rounded-xl border flex items-center justify-center cursor-pointer transition-colors ${
               isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
             }`}
             aria-label="Toggle Navigation Menu"

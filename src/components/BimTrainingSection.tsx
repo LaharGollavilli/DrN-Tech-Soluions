@@ -21,7 +21,7 @@ import {
   HelpCircle,
   MessageSquare
 } from 'lucide-react';
-import { RevitLogo, NavisworksLogo, AutoCadLogo } from './SoftwareLogos';
+import { RevitLogo, NavisworksLogo, AutoCadLogo, RecapLogo } from './SoftwareLogos';
 
 interface BimTrainingSectionProps {
   isDarkMode: boolean;
@@ -406,6 +406,41 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                 </div>
               </div>
             </div>
+
+            {/* Module 6: Scan-to-BIM & Point Cloud Reality Capture */}
+            <div className={`p-4 rounded-2xl border transition-all ${
+              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
+            }`}>
+              <div className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  6
+                </span>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                      Scan-to-BIM & Point Cloud to Revit Modeling
+                    </h4>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                      isDarkMode ? 'bg-slate-800 text-fuchsia-400 border-fuchsia-500/30' : 'bg-fuchsia-50 text-fuchsia-800 border-fuchsia-200'
+                    }`}>
+                      ReCap Pro & Revit
+                    </span>
+                  </div>
+                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Master in-demand Reality Capture workflows: ingesting 3D laser scan datasets (.RCP, .RCS, .E57), noise cleanup and registration in Autodesk ReCap Pro, linking point clouds into Revit by Shared Coordinates, surface fitting, and authoring millimeter-accurate as-built architectural & structural models.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {['Autodesk ReCap Pro', 'Point Cloud Ingestion (.RCP/.RCS)', 'As-Built Revit Modeling', 'Deviation Analysis', 'Retrofit & Renovation BIM'].map((tag, i) => (
+                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
+                      }`}>
+                        ✓ {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Software Covered Official Badges */}
@@ -417,45 +452,59 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
             }`}>
               Official Softwares Trained Hands-on
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className={`flex items-center gap-3 p-3 rounded-xl border ${
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className={`flex items-center gap-2.5 p-3 rounded-xl border ${
                 isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'
               }`}>
-                <RevitLogo className="w-10 h-10 shrink-0" />
-                <div>
-                  <div className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                <RevitLogo className="w-9 h-9 shrink-0" />
+                <div className="min-w-0">
+                  <div className={`text-xs font-bold truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                     Autodesk Revit
                   </div>
-                  <span className={`text-[10px] font-mono ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`}>
-                    Architecture & Structure
+                  <span className={`text-[10px] font-mono block truncate ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`}>
+                    Arch & Structure
                   </span>
                 </div>
               </div>
 
-              <div className={`flex items-center gap-3 p-3 rounded-xl border ${
+              <div className={`flex items-center gap-2.5 p-3 rounded-xl border ${
                 isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'
               }`}>
-                <NavisworksLogo className="w-10 h-10 shrink-0" />
-                <div>
-                  <div className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                    Navisworks Manage
+                <NavisworksLogo className="w-9 h-9 shrink-0" />
+                <div className="min-w-0">
+                  <div className={`text-xs font-bold truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                    Navisworks
                   </div>
-                  <span className={`text-[10px] font-mono ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`}>
-                    Clash & Coordination
+                  <span className={`text-[10px] font-mono block truncate ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`}>
+                    Clash & Coord
                   </span>
                 </div>
               </div>
 
-              <div className={`flex items-center gap-3 p-3 rounded-xl border ${
+              <div className={`flex items-center gap-2.5 p-3 rounded-xl border ${
                 isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'
               }`}>
-                <AutoCadLogo className="w-10 h-10 shrink-0" />
-                <div>
-                  <div className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                <RecapLogo className="w-9 h-9 shrink-0" />
+                <div className="min-w-0">
+                  <div className={`text-xs font-bold truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                    ReCap Pro
+                  </div>
+                  <span className={`text-[10px] font-mono block truncate ${isDarkMode ? 'text-fuchsia-400' : 'text-fuchsia-700'}`}>
+                    Scan-to-BIM
+                  </span>
+                </div>
+              </div>
+
+              <div className={`flex items-center gap-2.5 p-3 rounded-xl border ${
+                isDarkMode ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'
+              }`}>
+                <AutoCadLogo className="w-9 h-9 shrink-0" />
+                <div className="min-w-0">
+                  <div className={`text-xs font-bold truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                     AutoCAD
                   </div>
-                  <span className={`text-[10px] font-mono ${isDarkMode ? 'text-rose-400' : 'text-rose-700'}`}>
-                    2D Drafting & Import
+                  <span className={`text-[10px] font-mono block truncate ${isDarkMode ? 'text-rose-400' : 'text-rose-700'}`}>
+                    2D Drafting
                   </span>
                 </div>
               </div>
@@ -696,8 +745,8 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
 
               <div className="flex items-center gap-2.5">
                 <Mail className={`w-4 h-4 shrink-0 ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
-                <a href="mailto:drntechsolutions09@gmail.com" className="font-mono hover:underline">
-                  drntechsolutions09@gmail.com
+                <a href="mailto:info@drntechsolutions.in" className="font-mono hover:underline text-sky-600 dark:text-cyan-400 font-semibold">
+                  info@drntechsolutions.in
                 </a>
               </div>
 

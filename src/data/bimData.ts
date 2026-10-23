@@ -156,6 +156,58 @@ export const BIM_SERVICES: ServiceDetail[] = [
     softwareStack: ['Autodesk Navisworks Manage', 'Autodesk Revit', 'BIM Collab / BCF', 'AutoCAD'],
     useCases: ['Design-Build Contractors', 'Complex Commercial Buildings', 'Industrial Facilities'],
     sampleMetric: 'Eliminates up to 90% of on-site structural interferences prior to pouring'
+  },
+  {
+    id: 'scan-to-bim',
+    title: 'Scan-to-BIM & Point Cloud Modeling',
+    tagline: '3D Laser Scan & LiDAR Ingestion into Parametric Revit Models',
+    shortDescription: 'Processing 3D laser scan point clouds (.rcp, .rcs, .e57, .las) into millimeter-accurate, clash-free Revit models for as-built validation and retrofitting.',
+    fullDescription: 'Our specialized Scan-to-BIM modeling team converts point cloud data from terrestrial laser scanners (Faro, Leica, Trimble) and mobile LiDAR systems into parametric Autodesk Revit models (LOD 200 to LOD 400). We accurately capture existing wall deviations, floor level variations, complex structural steel geometries, and MEP plant rooms, providing building owners and retrofit contractors with precise as-built digital twins.',
+    iconName: 'Scan',
+    lodRange: 'LOD 200–400 As-Built',
+    deliverables: [
+      'As-Built Parametric Revit Models (.RVT Architecture & Structure)',
+      'Cleaned & Sectioned Point Cloud Overlays (.RCP / .RCS)',
+      'Tolerance & Deviation Heatmap Reports (.PDF)',
+      'Existing Conditions As-Built 2D Floor Plans & Sections (.DWG / .PDF)',
+      'OpenBIM As-Built Exports (.IFC 2x3 / .IFC4)'
+    ],
+    keyCapabilities: [
+      'Ingestion of massive point cloud datasets (.rcp, .rcs, .e57, .pts, .las)',
+      'Surface deviation analysis against design models to catch structural settling',
+      'Accurate modeling of historic, irregular, and sagged architectural elements',
+      'Plant room and MEP equipment extraction from dense scan clouds',
+      'Coordination of new proposed designs against existing as-built scan data'
+    ],
+    softwareStack: ['Autodesk Revit', 'Autodesk ReCap Pro', 'Navisworks Manage', 'CloudCompare'],
+    useCases: ['Renovation & Retrofit Projects', 'Heritage & Historical Building Conservation', 'Industrial Plant Upgrades', 'As-Built Facility Audits'],
+    sampleMetric: 'Within ±5mm alignment accuracy from scan point cloud to Revit geometry'
+  },
+  {
+    id: 'cad-to-bim',
+    title: 'CAD-to-BIM Conversion Services',
+    tagline: 'Legacy 2D DWGs, PDFs & Blueprints to Intelligent 3D BIM Models',
+    shortDescription: 'Upgrading flat 2D AutoCAD drawings, structural rebar sheets, and municipal permit prints into coordinated, data-dense LOD 200–400 Revit models.',
+    fullDescription: 'We help engineering consultants, architects, and contractors transition from legacy 2D CAD drafting to intelligent 3D BIM workflows. Our team reconstructs 2D DWGs, scanned paper drawings, and PDF engineering sets into fully parametric Autodesk Revit models, reconciling inter-sheet drawing conflicts and standardizing families.',
+    iconName: 'FileCode2',
+    lodRange: 'LOD 200–400',
+    deliverables: [
+      'Coordinated Multi-Discipline Revit Models (.RVT)',
+      'Dynamic 2D Working Drawings & Sections extracted directly from BIM',
+      'Grid & Level Discrepancy Reconciliation Audit Reports (.PDF)',
+      'Parametric Revit Family Libraries (.RFA)',
+      'Quantity Take-Off & Material BOQ Schedules (.XLSX)'
+    ],
+    keyCapabilities: [
+      'Complete layer and block interpretation from AutoCAD DWG/DXF files',
+      'Resolution of cross-sheet dimensional discrepancies before modeling',
+      'Parametric modeling of walls, doors, windows, slabs, and structural frames',
+      'Automated extraction of schedules with bidirectional parameter linking',
+      'Standardization to client or ISO 19650 naming conventions'
+    ],
+    softwareStack: ['Autodesk Revit', 'AutoCAD 2025', 'AutoCAD Architecture', 'Navisworks'],
+    useCases: ['Architects Upgrading to BIM', 'Contractors Building Virtual Mockups', 'Facility Managers Needing BIM Assets'],
+    sampleMetric: '100% elimination of 2D drawing inconsistencies across floor plans and sections'
   }
 ];
 
@@ -254,9 +306,9 @@ export const TRUST_METRICS = [
     sublabel: 'Dedicated engineering focus with milestone delivery commitments'
   },
   {
-    value: 'Digital Only',
-    label: 'Pure Modeling Workflows',
-    sublabel: 'All modeling derived from drawings & designs—no expensive scanning hardware needed'
+    value: 'Scan & CAD',
+    label: 'Scan-to-BIM & CAD-to-BIM',
+    sublabel: 'Point cloud conversion (.rcp, .rcs, .e57) & 2D CAD to intelligent Revit models'
   }
 ];
 
@@ -285,6 +337,10 @@ export const CLIENT_TESTIMONIALS = [
 ];
 
 export const FAQ_ITEMS = [
+  {
+    question: "Do you handle Scan-to-BIM from laser scanning / LiDAR point clouds and CAD-to-BIM conversions?",
+    answer: "Yes, absolutely! We specialize in both Scan-to-BIM and CAD-to-BIM modeling workflows. We ingest point clouds in .rcp, .rcs, .e57, .las, and .pts formats from terrestrial laser scanners or mobile LiDAR systems and convert them into millimeter-accurate parametric Autodesk Revit models (LOD 200–400) for as-built verification, renovation, and plant retrofitting. We also convert legacy 2D AutoCAD DWGs, structural drawings, and PDF sheets into intelligent, fully coordinated 3D BIM models with automated quantity extraction."
+  },
   {
     question: "How do your engineers synchronize 2D AutoCAD Project North with Revit Shared Coordinates and Survey Benchmarks?",
     answer: "We establish a fixed geodetic benchmark based on the site boundary and municipal datum. In Autodesk Revit, we lock the Survey Point and Project Base Point with true Northing/Easting coordinates and True North angle rotation. Linked 2D AutoCAD DWGs are ingested via 'By Shared Coordinates' rather than Center-to-Center, completely eliminating coordinate drift, level discrepancies, and rotation mismatches between architectural layouts and structural foundation grids."
@@ -315,7 +371,7 @@ export const FAQ_ITEMS = [
   },
   {
     question: "Where is Dharani Tech Solutions based, and can we schedule an in-person technical scoping session?",
-    answer: "Our primary engineering modeling office is based in Visakhapatnam (Vizag), Andhra Pradesh, situated at: Kurmanpalem, Duvvada Railway Station Road, Balaji Nagar, Road No. 5, Pin Code: 530046. Consulting engineers, architects, and contractors can schedule in-person technical reviews or reach our engineering desk directly at Landline: 0891-4630073 or Mobile: +91 898529579."
+    answer: "Our primary engineering modeling office is based in Visakhapatnam (Vizag), Andhra Pradesh, situated at: Kurmannapalem, Duvvada Railway Station Road, Balaji Nagar, Road No. 5, Pin Code: 530046. Consulting engineers, architects, and contractors can schedule in-person technical reviews or reach our engineering desk directly at Landline: 0891-4630073 or Mobile: +91 8985829579."
   }
 ];
 
