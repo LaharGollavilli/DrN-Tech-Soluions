@@ -70,13 +70,17 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
                 </span>
               </div>
 
-              <div className={`flex items-center gap-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                <Mail className={`w-4 h-4 flex-shrink-0 ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
-                <div className="font-mono flex flex-wrap gap-2">
+              <div className={`flex items-start sm:items-center gap-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                <Mail className={`w-4 h-4 flex-shrink-0 mt-0.5 sm:mt-0 ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
+                <div className="font-mono flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
                   <a href="mailto:info@drntechsolutions.in" className="hover:underline font-semibold text-sky-600 dark:text-cyan-400">
                     info@drntechsolutions.in
                   </a>
-                  <span>•</span>
+                  <span className="text-slate-400">•</span>
+                  <a href="mailto:hr@drntechsolutions.in" className="hover:underline text-slate-700 dark:text-slate-300">
+                    hr@drntechsolutions.in
+                  </a>
+                  <span className="text-slate-400">•</span>
                   <a href="mailto:careers@drntechsolutions.in" className="hover:underline text-slate-700 dark:text-slate-300">
                     careers@drntechsolutions.in
                   </a>

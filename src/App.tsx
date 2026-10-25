@@ -114,17 +114,17 @@ export default function App() {
                 ? 'bg-sky-950/40 border-slate-800 text-sky-200' 
                 : 'bg-sky-50 border-sky-100 text-sky-900'
             }`}>
-              <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 sm:gap-4 flex-wrap leading-normal">
+              <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 sm:gap-4 flex-wrap leading-normal px-2">
                 {/* BIM Training Academy Highlight */}
-                <div className="flex items-center gap-1.5 whitespace-nowrap">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <div className="flex items-center justify-center gap-1.5 flex-wrap sm:flex-nowrap text-center">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
                   <span className="font-bold text-amber-600 dark:text-amber-400">Revit & BIM Training:</span>
-                  <span>Admissions Open for Civil & Architecture Students</span>
+                  <span>Admissions Open (Civil & Arch)</span>
                   <a
                     href="#bim-training"
-                    className="font-bold text-sky-600 dark:text-cyan-400 hover:underline flex items-center gap-0.5 cursor-pointer ml-0.5"
+                    className="font-bold text-sky-600 dark:text-cyan-400 hover:underline inline-flex items-center gap-0.5 cursor-pointer ml-0.5"
                   >
-                    <span>View Syllabus & Demo</span>
+                    <span>View Syllabus</span>
                     <ArrowRight className="w-3 h-3" />
                   </a>
                 </div>
@@ -132,12 +132,12 @@ export default function App() {
                 <span className="hidden md:inline text-slate-300 dark:text-slate-700">|</span>
 
                 {/* Careers Highlight */}
-                <div className="flex items-center gap-1.5 whitespace-nowrap">
-                  <Briefcase className="w-3.5 h-3.5 text-sky-600 flex-shrink-0" />
+                <div className="flex items-center justify-center gap-1.5 flex-wrap sm:flex-nowrap text-center">
+                  <Briefcase className="w-3.5 h-3.5 text-sky-600 shrink-0" />
                   <span>Hiring in Vizag: <strong>BIM Interns & Modelers</strong></span>
                   <button
                     onClick={() => navigateToView('careers')}
-                    className="font-bold text-sky-600 dark:text-cyan-400 hover:underline flex items-center gap-0.5 cursor-pointer ml-0.5"
+                    className="font-bold text-sky-600 dark:text-cyan-400 hover:underline inline-flex items-center gap-0.5 cursor-pointer ml-0.5"
                   >
                     <span>View Jobs</span>
                     <ArrowRight className="w-3 h-3" />

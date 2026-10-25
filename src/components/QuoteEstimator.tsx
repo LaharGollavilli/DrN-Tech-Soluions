@@ -19,8 +19,11 @@ import {
   Download,
   Printer,
   AlertCircle,
-  MapPin
+  MapPin,
+  MessageSquare,
+  ExternalLink
 } from 'lucide-react';
+import { formatProposalNotification } from '../utils/notificationService';
 
 const FACILITY_TYPES = [
   { id: 'residential', label: 'Residential Building / Villa', icon: '🏡', desc: 'Independent houses, villas & apartments' },
@@ -844,20 +847,68 @@ Email: info@drntechsolutions.in
             </div>
           </div>
         ) : (
-          /* SUBMITTED SUCCESS VIEW & DEDICATED 5-STEP PRINTABLE SUMMARY */
-          <div className="relative z-10 py-6 animate-in fade-in zoom-in-95 duration-300">
-            <div className="no-print max-w-2xl mx-auto text-center space-y-3 mb-6">
-              <div className="w-14 h-14 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/60 border-2 border-emerald-500 flex items-center justify-center text-emerald-600 shadow-md">
-                <CheckCircle2 className="w-8 h-8" />
-              </div>
+          (() => {
+            const proposalNotification = formatProposalNotification({
+              clientName: formData.clientName,
+              companyName: formData.companyName,
+              clientPhone: formData.clientPhone,
+              clientEmail: formData.clientEmail,
+              facilityType: FACILITY_TYPES.find(f => f.id === formData.facilityType)?.label || formData.facilityType,
+              floorArea: formData.floorArea,
+              scaleUnit: formData.scaleUnit,
+              disciplines: formData.disciplines.map(dId => DISCIPLINE_OPTIONS.find(d => d.id === dId)?.label || dId),
+              lodLevel: formData.lodLevel,
+              inputFiles: formData.inputFiles,
+              timeline: TIMELINE_OPTIONS.find(t => t.id === formData.timeline)?.label || formData.timeline,
+              ndaRequired: formData.ndaRequired,
+              projectNotes: formData.projectNotes
+            });
 
-              <h3 className={`text-2xl md:text-3xl font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                Project Scope Inquiry Received!
-              </h3>
-              <p className={`text-sm ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                Thank you, <strong className="text-sky-600">{formData.clientName}</strong>. Your 5 project parameters have been recorded for formal engineering quotation.
-              </p>
-            </div>
+            return (
+              <div className="relative z-10 py-6 animate-in fade-in zoom-in-95 duration-300">
+                <div className="no-print max-w-2xl mx-auto text-center space-y-3 mb-6">
+                  <div className="w-14 h-14 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/60 border-2 border-emerald-500 flex items-center justify-center text-emerald-600 shadow-md">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+
+                  <h3 className={`text-2xl md:text-3xl font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                    Project Scope Inquiry Received!
+                  </h3>
+                  <p className={`text-sm ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                    Thank you, <strong className="text-sky-600">{formData.clientName}</strong>. Your 5 project parameters have been recorded for formal engineering quotation.
+                  </p>
+                </div>
+
+                {/* Instant Notification Dispatch Card to info@drntechsolutions.in & WhatsApp */}
+                <div className="no-print max-w-2xl mx-auto mb-6 p-4 sm:p-5 rounded-2xl border bg-gradient-to-r from-emerald-500/10 via-sky-500/10 to-teal-500/10 border-emerald-500/30 text-center space-y-3 shadow-sm">
+                  <div className="flex items-center justify-center gap-2 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span>INSTANT NOTIFICATION DISPATCH TO ENGINEERING LEAD</span>
+                  </div>
+                  <p className={`text-xs leading-relaxed max-w-lg mx-auto ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Your project details will be automatically routed to <strong>info@drntechsolutions.in</strong>. For immediate priority engineering response, dispatch directly to our lead engineer:
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 pt-1">
+                    <a
+                      href={proposalNotification.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102"
+                      title="Dispatch directly to lead modeler WhatsApp (+91 8985829579)"
+                    >
+                      <MessageSquare className="w-4 h-4 fill-current" />
+                      <span>Alert on WhatsApp (+91 8985829579)</span>
+                    </a>
+                    <a
+                      href={proposalNotification.mailtoUrl}
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102"
+                      title="Send formal email to info@drntechsolutions.in"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Send to info@drntechsolutions.in</span>
+                    </a>
+                  </div>
+                </div>
 
             {/* Generated Scope Summary Card & Dedicated Printable Slip */}
             <div 
@@ -1173,21 +1224,41 @@ Email: info@drntechsolutions.in
               </div>
 
               {/* Action Buttons (Hidden when printing via .no-print) */}
-              <div className="no-print pt-3 flex flex-wrap items-center gap-3 border-t border-slate-200 dark:border-slate-800">
+              <div className="no-print pt-3 flex flex-wrap items-center gap-2.5 sm:gap-3 border-t border-slate-200 dark:border-slate-800">
+                <a
+                  href={proposalNotification.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-102"
+                  title="Direct WhatsApp notification to lead engineer (+91 8985829579)"
+                >
+                  <MessageSquare className="w-4 h-4 fill-current" />
+                  <span>Alert on WhatsApp</span>
+                </a>
+
+                <a
+                  href={proposalNotification.mailtoUrl}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-sky-700 hover:bg-sky-600 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-102"
+                  title="Email inquiry parameters to info@drntechsolutions.in"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Send Email</span>
+                </a>
+
                 <button
                   type="button"
                   onClick={handlePrintScope}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-102"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-102"
                   title="Print clean 5-step scoping summary"
                 >
                   <Printer className="w-4 h-4" />
-                  <span>Print Scope Summary</span>
+                  <span>Print Summary</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={handleDownloadScope}
-                  className={`w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-semibold border flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                  className={`w-full sm:w-auto px-3.5 py-2.5 rounded-xl text-xs font-semibold border flex items-center justify-center gap-2 transition-all cursor-pointer ${
                     isDarkMode
                       ? 'bg-slate-800 hover:bg-slate-700 text-cyan-400 border-slate-700'
                       : 'bg-white hover:bg-slate-50 text-sky-700 border-slate-300 shadow-sm'
@@ -1195,7 +1266,7 @@ Email: info@drntechsolutions.in
                   title="Download copy of 5-step scoping parameters as text file"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Download Summary (.TXT)</span>
+                  <span>Download (.TXT)</span>
                 </button>
 
                 <button
@@ -1204,18 +1275,20 @@ Email: info@drntechsolutions.in
                     setSubmitted(false);
                     setCurrentStep(1);
                   }}
-                  className={`w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-mono text-center border transition-colors cursor-pointer ${
+                  className={`w-full sm:w-auto px-3.5 py-2.5 rounded-xl text-xs font-mono text-center border transition-colors cursor-pointer ${
                     isDarkMode 
                       ? 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800' 
                       : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
                   }`}
                 >
-                  Submit Another Project Inquiry
+                  New Inquiry
                 </button>
               </div>
             </div>
           </div>
-        )}
+        );
+      })()
+    )}
       </div>
     </div>
   );

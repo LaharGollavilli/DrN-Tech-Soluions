@@ -19,9 +19,12 @@ import {
   Building,
   Hammer,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
+  Send,
+  ExternalLink
 } from 'lucide-react';
 import { RevitLogo, NavisworksLogo, AutoCadLogo, RecapLogo } from './SoftwareLogos';
+import { formatTrainingNotification } from '../utils/notificationService';
 
 interface BimTrainingSectionProps {
   isDarkMode: boolean;
@@ -539,37 +542,85 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
             </p>
 
             {formSubmitted ? (
-              <div className="text-center py-6 space-y-4 animate-in fade-in">
+              <div className="text-center py-5 space-y-4 animate-in fade-in">
                 <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <div>
                   <h4 className={`text-base font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                    Demo Class Reserved!
+                    Demo Class Registration Ready!
                   </h4>
-                  <p className={`text-xs mt-1 max-w-xs mx-auto leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Thank you, <strong>{formData.fullName}</strong>. Our lead modeling engineer will call you shortly at <strong>{formData.phone}</strong> to confirm your slot.
+                  <p className={`text-xs mt-1 max-w-sm mx-auto leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Thank you, <strong>{formData.fullName}</strong>. To ensure priority slot allocation, please dispatch this registration directly to our team via WhatsApp or Official Email:
                   </p>
                 </div>
 
-                <div className="pt-2 flex flex-col gap-2">
-                  <a
-                    href={`https://wa.me/918985829579?text=${whatsappMessage}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
-                  >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>Instant WhatsApp Confirmation</span>
-                  </a>
+                {(() => {
+                  const notif = formatTrainingNotification({
+                    fullName: formData.fullName,
+                    phone: formData.phone,
+                    email: formData.email,
+                    qualification: formData.qualification,
+                    preferredBatch: formData.preferredBatch,
+                    interestedTrack: formData.interestedTrack
+                  });
+                  return (
+                    <div className="space-y-2.5 pt-1 text-left">
+                      <div className={`p-3 rounded-xl border text-xs ${
+                        isDarkMode ? 'bg-slate-900/90 border-slate-700/80' : 'bg-slate-50 border-slate-200'
+                      }`}>
+                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+                          <span>NOTIFICATIONS DESTINATION</span>
+                          <span className="text-emerald-500 font-bold">READY TO DISPATCH</span>
+                        </div>
+                        <div className="space-y-1 text-[11px] font-mono">
+                          <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                            <Mail className="w-3.5 h-3.5 text-sky-500 shrink-0" />
+                            <span>info@drntechsolutions.in</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                            <MessageSquare className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                            <span>WhatsApp: +91 8985829579</span>
+                          </div>
+                        </div>
+                      </div>
 
-                  <button
-                    onClick={resetForm}
-                    className={`text-xs underline py-1 cursor-pointer ${isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}
-                  >
-                    Register another candidate
-                  </button>
-                </div>
+                      <div className="flex flex-col gap-2">
+                        <a
+                          href={notif.whatsappUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          <span>Alert Coordinator via WhatsApp</span>
+                        </a>
+
+                        <a
+                          href={notif.mailtoUrl}
+                          className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-all ${
+                            isDarkMode
+                              ? 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border-cyan-500/30'
+                              : 'bg-white hover:bg-slate-50 text-sky-700 border-sky-300 shadow-xs'
+                          }`}
+                        >
+                          <Send className="w-4 h-4 text-sky-500" />
+                          <span>Send Registration Email</span>
+                          <ExternalLink className="w-3.5 h-3.5 opacity-60 ml-auto" />
+                        </a>
+                      </div>
+
+                      <div className="text-center pt-2">
+                        <button
+                          onClick={resetForm}
+                          className={`text-xs underline py-1 cursor-pointer ${isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}
+                        >
+                          Register another candidate
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3.5">

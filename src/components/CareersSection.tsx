@@ -15,8 +15,10 @@ import {
   ArrowRight,
   ArrowLeft,
   X,
-  Quote
+  Quote,
+  MessageSquare
 } from 'lucide-react';
+import { formatCareerNotification } from '../utils/notificationService';
 
 interface CareersSectionProps {
   isDarkMode?: boolean;
@@ -576,25 +578,69 @@ export const CareersSection: React.FC<CareersSectionProps> = ({
                   </button>
                 </div>
               </form>
-            ) : (
-              <div className="text-center py-6 space-y-3">
-                <div className="w-12 h-12 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                  <CheckCircle2 className="w-7 h-7" />
+            ) : (() => {
+              const careerNotification = formatCareerNotification({
+                jobTitle: appliedJobTitle || selectedJob?.title || 'BIM Modeler / Intern',
+                candidateName,
+                candidateEmail,
+                candidatePhone,
+                candidateExp,
+                isVizagResident,
+                candidateNotes
+              });
+
+              return (
+                <div className="text-center py-5 space-y-4">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shadow-sm">
+                    <CheckCircle2 className="w-7 h-7" />
+                  </div>
+                  <h4 className="text-lg font-bold text-slate-900 dark:text-white">Application Successfully Logged!</h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">
+                    Thank you, <strong>{candidateName}</strong>. Your profile for <strong>{appliedJobTitle}</strong> is ready for HR evaluation.
+                  </p>
+
+                  {/* Immediate WhatsApp & Email Notification Dispatch */}
+                  <div className="p-4 rounded-xl border bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-500/30 space-y-2.5">
+                    <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>DIRECT HR & TALENT DESK NOTIFICATION</span>
+                    </div>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                      Dispatch your profile immediately to our hiring desk at <strong>hr@drntechsolutions.in</strong> and WhatsApp:
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-1">
+                      <a
+                        href={careerNotification.whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-2 transition-all hover:scale-102"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 fill-current" />
+                        <span>Send to HR WhatsApp (+91 8985829579)</span>
+                      </a>
+                      <a
+                        href={careerNotification.mailtoUrl}
+                        className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-2 transition-all hover:scale-102"
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>Email hr@drntechsolutions.in</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => setShowApplyModal(false)}
+                      className={`px-5 py-2 rounded-xl text-xs font-mono font-bold border transition-colors cursor-pointer ${
+                        isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700' : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200'
+                      }`}
+                    >
+                      Close Window
+                    </button>
+                  </div>
                 </div>
-                <h4 className="text-lg font-bold">Application Received!</h4>
-                <p className="text-xs text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
-                  Thank you, <strong>{candidateName}</strong>. Our modeling team lead in Visakhapatnam will review your profile and contact you at <strong>{candidatePhone}</strong> for an interview or technical evaluation.
-                </p>
-                <div className="pt-4">
-                  <button
-                    onClick={() => setShowApplyModal(false)}
-                    className="px-5 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold cursor-pointer"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            )}
+              );
+            })()}
           </div>
         </div>
       )}
