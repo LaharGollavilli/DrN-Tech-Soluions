@@ -68,13 +68,16 @@
     visibility: hidden;
   }
 
-  /* Make only the inquiry summary container visible */
+  /* Make only the inquiry summary or inquiry document container visible */
   #printable-inquiry-summary,
-  #printable-inquiry-summary * {
+  #printable-inquiry-summary *,
+  #printable-inquiry-document,
+  #printable-inquiry-document * {
     visibility: visible;
   }
 
-  #printable-inquiry-summary {
+  #printable-inquiry-summary,
+  #printable-inquiry-document {
     position: absolute;
     left: 0;
     top: 0;

@@ -45,13 +45,13 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
                 <span className={`text-[10px] font-mono tracking-wider uppercase -mt-0.5 ${
                   isDarkMode ? 'text-cyan-400' : 'text-sky-600'
                 }`}>
-                  BIM MODELING • SCAN-TO-BIM • CAD-TO-BIM • AUTOCAD WORKS
+                  BIM MODELING • SCAN-TO-BIM • SCAN-TO-CAD • CAD-TO-BIM • AUTOCAD WORKS
                 </span>
               </div>
             </div>
 
             <p className={`text-xs leading-relaxed max-w-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-              Professional engineering consultancy delivering BIM Architecture & Structure (LOD 100–400), Scan-to-BIM (point cloud conversion), CAD-to-BIM, and complete AutoCAD 2D & 3D Drafting Works for architects, civil engineers, and contractors.
+              Professional engineering consultancy delivering BIM Architecture & Structure (LOD 100–400), Scan-to-BIM & Scan-to-CAD (point cloud conversion), CAD-to-BIM, and complete AutoCAD 2D & 3D Drafting Works for architects, civil engineers, and contractors.
             </p>
 
             {/* Office Contact Details */}
@@ -66,7 +66,7 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
               <div className={`flex items-center gap-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                 <Phone className={`w-4 h-4 flex-shrink-0 ${isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
                 <span className="font-mono">
-                  Mobile / WhatsApp: <a href="tel:8985829579" className="hover:underline font-bold text-sky-600 dark:text-cyan-400">+91 8985829579</a> | Landline: <a href="tel:08914630073" className="hover:underline font-bold">0891-4630073</a>
+                  Mobile / WhatsApp: <a href="tel:8985829579" className="hover:underline font-bold text-sky-600 dark:text-cyan-400">+91 8985829579</a> | Landline: <a href="tel:08914630073" className="hover:underline font-bold text-sky-600 dark:text-cyan-400">0891-4630073</a>
                 </span>
               </div>
 
@@ -77,11 +77,11 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
                     info@drntechsolutions.in
                   </a>
                   <span className="text-slate-400">•</span>
-                  <a href="mailto:hr@drntechsolutions.in" className="hover:underline text-slate-700 dark:text-slate-300">
+                  <a href="mailto:hr@drntechsolutions.in" className="hover:underline font-semibold text-sky-600 dark:text-cyan-400">
                     hr@drntechsolutions.in
                   </a>
                   <span className="text-slate-400">•</span>
-                  <a href="mailto:careers@drntechsolutions.in" className="hover:underline text-slate-700 dark:text-slate-300">
+                  <a href="mailto:careers@drntechsolutions.in" className="hover:underline font-semibold text-sky-600 dark:text-cyan-400">
                     careers@drntechsolutions.in
                   </a>
                 </div>
@@ -171,6 +171,16 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
               </li>
               <li>
                 <a href="#services" className={`transition-colors ${isDarkMode ? 'hover:text-cyan-400' : 'hover:text-sky-600'}`}>
+                  Scan-to-CAD Drafting Services
+                </a>
+              </li>
+              <li>
+                <a href="#services" className={`transition-colors ${isDarkMode ? 'hover:text-cyan-400' : 'hover:text-sky-600'}`}>
+                  Scan-to-BIM Point Cloud Modeling
+                </a>
+              </li>
+              <li>
+                <a href="#services" className={`transition-colors ${isDarkMode ? 'hover:text-cyan-400' : 'hover:text-sky-600'}`}>
                   AutoCAD Working & Shop Drawings
                 </a>
               </li>
@@ -193,6 +203,11 @@ export const Footer: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMode = false 
               <li>
                 <a href="#services" className={`transition-colors ${isDarkMode ? 'hover:text-cyan-400' : 'hover:text-sky-600'}`}>
                   Core Services Matrix
+                </a>
+              </li>
+              <li>
+                <a href="#portfolio" className={`transition-colors ${isDarkMode ? 'hover:text-cyan-400' : 'hover:text-sky-600'}`}>
+                  Project Portfolio (LOD 100–400)
                 </a>
               </li>
               <li>

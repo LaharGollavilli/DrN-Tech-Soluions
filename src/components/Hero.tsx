@@ -6,7 +6,8 @@ import {
   FileCheck2, 
   CheckCircle2, 
   Compass,
-  Briefcase
+  Briefcase,
+  Calculator
 } from 'lucide-react';
 
 interface HeroProps {
@@ -39,7 +40,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
             <span className={`text-[10.5px] sm:text-xs font-mono font-bold tracking-wide uppercase text-center leading-tight ${
               isDarkMode ? 'text-cyan-300' : 'text-sky-800'
             }`}>
-              BIM MODELING • SCAN-TO-BIM • CAD-TO-BIM • AUTOCAD WORKS
+              BUILDING PLANNING • 3D DESIGN • BIM MODELING • SCAN-TO-BIM • AUTOCAD WORKS
             </span>
           </div>
 
@@ -47,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
           <h1 className={`text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] ${
             isDarkMode ? 'text-white' : 'text-slate-900'
           }`}>
-            Virtual Design, Scan-to-BIM &{' '}
+            Building Planning, 3D Design &{' '}
             <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 bg-clip-text text-transparent">
               BIM Architecture & Structure
@@ -59,11 +60,11 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
           <p className={`mt-5 sm:mt-6 text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed ${
             isDarkMode ? 'text-slate-300' : 'text-slate-600'
           }`}>
-            We deliver high-precision Autodesk Revit BIM modeling (LOD 100–400), Scan-to-BIM point cloud processing, CAD-to-BIM conversions, building planning, and complete AutoCAD 2D & 3D drafting works for architects, civil engineers, and contractors.
+            We deliver high-precision Autodesk Revit BIM modeling (LOD 100–400), Scan-to-BIM & Scan-to-CAD point cloud processing, CAD-to-BIM conversions, building planning, AutoCAD rebar detailing & BBS, and complete AutoCAD 2D & 3D drafting works for architects, civil engineers, and contractors.
           </p>
 
-          {/* Clean Action Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto flex-wrap">
+          {/* Balanced, Professional Action Buttons */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-3xl mx-auto">
             <a
               href="#services"
               className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm transition-all shadow-md shadow-sky-600/20 flex items-center justify-center gap-2 cursor-pointer hover:scale-102"
@@ -71,6 +72,18 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
               <Layers className="w-4 h-4 text-white" />
               <span>Explore Services & Works</span>
               <ArrowRight className="w-4 h-4 text-white" />
+            </a>
+
+            <a
+              href="#quote-estimator"
+              className={`w-full sm:w-auto px-5 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 border shadow-xs cursor-pointer hover:scale-102 ${
+                isDarkMode
+                  ? 'bg-sky-950/60 hover:bg-sky-900/70 text-sky-300 border-sky-500/40'
+                  : 'bg-sky-50 hover:bg-sky-100 text-sky-900 border-sky-300'
+              }`}
+            >
+              <Calculator className="w-4 h-4 text-sky-500" />
+              <span>Get Project Quote</span>
             </a>
 
             <a
@@ -84,20 +97,22 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode = false, onOpenCareers })
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>Revit & BIM Training</span>
               <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-600 text-white font-bold">
-                ADMISSIONS OPEN
+                OPEN
               </span>
             </a>
+          </div>
 
+          {/* Clean Sub-CTA for Careers */}
+          <div className="mt-4 text-center">
             <button
               onClick={onOpenCareers}
-              className={`w-full sm:w-auto px-5 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 border shadow-xs cursor-pointer ${
-                isDarkMode 
-                  ? 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-700' 
-                  : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300 hover:text-slate-900'
+              className={`inline-flex items-center gap-2 text-xs font-semibold hover:underline cursor-pointer transition-colors ${
+                isDarkMode ? 'text-slate-400 hover:text-cyan-300' : 'text-slate-600 hover:text-sky-600'
               }`}
             >
-              <Briefcase className="w-4 h-4 text-sky-600" />
-              <span>Careers (Hiring!)</span>
+              <Briefcase className="w-3.5 h-3.5 text-sky-500" />
+              <span>Looking for modeler roles? We are hiring in Vizag.</span>
+              <span className="font-bold underline ml-1">View Open Careers & Apply →</span>
             </button>
           </div>
 

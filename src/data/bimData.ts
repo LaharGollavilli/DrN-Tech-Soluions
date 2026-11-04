@@ -106,6 +106,32 @@ export const BIM_SERVICES: ServiceDetail[] = [
     sampleMetric: '100% layer discipline and dimensional accuracy on all exported sheets'
   },
   {
+    id: 'autocad-rebar-detailing',
+    title: 'AutoCAD Rebar Detailing & BBS',
+    tagline: 'RCC Structural Reinforcement, Bar Bending Schedules & Shop Drawings',
+    shortDescription: 'High-precision 2D & 3D AutoCAD rebar detailing, automated Bar Bending Schedules (BBS), lap lengths, bend cut lists, and reinforcement placement shop drawings.',
+    fullDescription: 'Our specialized structural AutoCAD team delivers comprehensive reinforced concrete (RCC) rebar detailing and fabrication-grade shop drawings. We prepare complete structural reinforcement sheets for foundations, raft slabs, columns, shear walls, retaining structures, transfer beams, and elevated floor slabs. Every drawing is paired with automated Bar Bending Schedules (BBS) conforming to IS 2502, BS 8666, and ACI 318 standards, optimizing bar cuts to minimize steel scrap and job-site rebar wastage.',
+    iconName: 'FileCheck',
+    lodRange: '2D & 3D Rebar Detailing',
+    deliverables: [
+      'Fabrication-Ready Rebar Placement Shop Drawings (.DWG & .PDF)',
+      'Automated Bar Bending Schedules (BBS) with Shape Codes (.XLSX & .PDF)',
+      'Beam, Column & Shear Wall Elevation Details with Staggered Laps',
+      'Raft Foundation, Footings & Dowel Bar Grid Placement Sheets',
+      'Steel Tonnage Summaries & Scrap Curtailment Optimization Reports'
+    ],
+    keyCapabilities: [
+      'RCC slabs, beams, columns, shear walls, retaining walls, and footing rebar detailing in AutoCAD',
+      'Automated BBS calculation: bar mark numbers, cut lengths, diameter weights, and bend shapes',
+      'Congestion resolution at complex beam-column moment frame intersections before pouring',
+      'Standardized bar callouts, cover clearances, hook dimensions, and lap splice schedules',
+      'Strict adherence to Indian (IS), British (BS), and American (ACI) detailing standards'
+    ],
+    softwareStack: ['AutoCAD 2025', 'AutoCAD Structural Detailing', 'RC CAD Tools', 'Bluebeam Revu'],
+    useCases: ['General Contractors & Civil Builders', 'Structural Engineering Consultancies', 'Rebar Fabricators & Steel Fixers', 'Infrastructure & High-Rise Developers'],
+    sampleMetric: 'Eliminates up to 15% site steel scrap via automated rebar cut optimization'
+  },
+  {
     id: 'interior-design',
     title: 'Interior Design (ID) Modeling',
     tagline: 'Custom Millwork, Joinery, Reflected Ceilings & Finishes',
@@ -182,6 +208,32 @@ export const BIM_SERVICES: ServiceDetail[] = [
     softwareStack: ['Autodesk Revit', 'Autodesk ReCap Pro', 'Navisworks Manage', 'CloudCompare'],
     useCases: ['Renovation & Retrofit Projects', 'Heritage & Historical Building Conservation', 'Industrial Plant Upgrades', 'As-Built Facility Audits'],
     sampleMetric: 'Within ±5mm alignment accuracy from scan point cloud to Revit geometry'
+  },
+  {
+    id: 'scan-to-cad',
+    title: 'Scan-to-CAD Drafting Services',
+    tagline: 'Point Cloud to Precision 2D AutoCAD (.DWG) Plans, Sections & Elevations',
+    shortDescription: 'Extracting millimeter-accurate 2D AutoCAD floor plans, exterior elevations, cross-sections, and site layouts from 3D laser scan and LiDAR point cloud data.',
+    fullDescription: 'Our specialized Scan-to-CAD drafting division processes client-supplied 3D laser scans (.rcp, .rcs, .e57, .las, .pts) into clean, layer-standardized 2D and 3D AutoCAD drawings. Ideal for architects, structural engineers, and facility owners requiring precise existing conditions documentation without migrating to a full Revit BIM model. We extract accurate wall boundaries, structural columns, slab deviations, ceiling heights, window openings, and MEP plant room layouts directly from point clouds with strict CAD layering discipline.',
+    iconName: 'Scan',
+    lodRange: 'Point Cloud to 2D CAD',
+    deliverables: [
+      'Millimeter-Accurate As-Built 2D Floor Plans (.DWG & .PDF)',
+      'Exterior Building Elevations & Longitudinal Sections',
+      'Reflected Ceiling & Roof Geometry Plans (.DWG)',
+      'Structural Framing & Column Grid Setting Drawings',
+      'Layer-Standardized AutoCAD Packages (AIA / ISO / Client CAD Standards)'
+    ],
+    keyCapabilities: [
+      'Point cloud slicing and vectorization in AutoCAD & Autodesk ReCap Pro',
+      'Capturing existing structural wall bowing, floor settling, and true dimensions',
+      'Strict CAD standards: layers, line weights, dimension styles, and blocks',
+      'Fast turnaround for renovation, historic conservation, and retrofit projects',
+      'Complete mechanical, electrical, and plumbing (MEP) 2D equipment layouts from scans'
+    ],
+    softwareStack: ['AutoCAD 2025', 'Autodesk ReCap Pro', 'CloudCompare', 'Bluebeam Revu'],
+    useCases: ['Architectural Renovation & Retrofits', 'Heritage Building Conservation', 'Industrial Plant 2D As-Builts', 'Municipal Permit & Sanction Drawings'],
+    sampleMetric: 'Accurate 2D vectorization within ±3mm to ±5mm of point cloud geometry'
   },
   {
     id: 'cad-to-bim',
@@ -292,23 +344,23 @@ export const LOD_SPECTRUM: LodDefinition[] = [
 export const TRUST_METRICS = [
   {
     value: '100%',
-    label: 'Precision CAD & BIM Delivery',
+    label: 'Model Accuracy & Integrity',
     sublabel: 'Strict dimensional fidelity in building planning, AutoCAD, and Revit models'
   },
   {
-    value: 'LOD 100–400',
-    label: 'Parametric BIM Modeling',
-    sublabel: 'Standardized architectural and structural Revit model authoring'
+    value: 'LOD 400',
+    label: 'Full Parametric Range',
+    sublabel: 'From schematic conceptual design to shop-grade rebar & fabrication detailing'
   },
   {
-    value: 'Fast & Agile',
-    label: 'Turnaround Timelines',
-    sublabel: 'Dedicated engineering focus with milestone delivery commitments'
+    value: 'Zero Clash',
+    label: 'Federated Coordination',
+    sublabel: 'Navisworks clash detection eliminating spatial interferences before site execution'
   },
   {
-    value: 'Scan & CAD',
-    label: 'Scan-to-BIM & CAD-to-BIM',
-    sublabel: 'Point cloud conversion (.rcp, .rcs, .e57) & 2D CAD to intelligent Revit models'
+    value: 'Scan-to-BIM',
+    label: 'Reality Capture & CAD-to-BIM',
+    sublabel: 'Point cloud (.rcp/.rcs/.e57) conversion and legacy drawing digitization'
   }
 ];
 

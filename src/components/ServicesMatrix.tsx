@@ -2,34 +2,14 @@ import React, { useState } from 'react';
 import { BIM_SERVICES } from '../data/bimData';
 import { Discipline, ServiceDetail } from '../types/bim';
 import { 
-  Building2, 
-  Layers, 
-  Cpu, 
-  ShieldAlert, 
-  FileCode2, 
-  BarChart3, 
   ArrowRight, 
   CheckCircle2, 
   X, 
   FileCheck, 
-  Laptop2,
-  Workflow,
-  Compass,
-  FileText,
-  Scan
+  Workflow, 
+  ChevronDown
 } from 'lucide-react';
-
-const ICONS: Record<string, React.ElementType> = {
-  Building2,
-  Layers,
-  Cpu,
-  ShieldAlert,
-  FileCode2,
-  BarChart3,
-  Compass,
-  FileText,
-  Scan
-};
+import { ServiceDisciplineLogo } from './SoftwareLogos';
 
 interface ServicesMatrixProps {
   onSelectServiceForQuote?: (disciplineId: Discipline) => void;
@@ -41,11 +21,16 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
   isDarkMode = false 
 }) => {
   const [activeTab, setActiveTab] = useState<Discipline | 'all'>('all');
+  const [showAllDisciplines, setShowAllDisciplines] = useState(false);
   const [inspectedService, setInspectedService] = useState<ServiceDetail | null>(null);
 
-  const filteredServices = activeTab === 'all' 
+  const allFiltered = activeTab === 'all' 
     ? BIM_SERVICES 
     : BIM_SERVICES.filter((s) => s.id === activeTab);
+
+  const displayedServices = (activeTab === 'all' && !showAllDisciplines)
+    ? allFiltered.slice(0, 6)
+    : allFiltered;
 
   return (
     <div className="w-full">
@@ -65,7 +50,6 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
         </button>
 
         {BIM_SERVICES.map((srv) => {
-          const Icon = ICONS[srv.iconName] || Building2;
           const isActive = activeTab === srv.id;
           return (
             <button
@@ -79,7 +63,9 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
                     : 'bg-white text-slate-700 hover:text-slate-950 border-slate-200 hover:bg-slate-50 shadow-xs'
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-white' : isDarkMode ? 'text-cyan-400' : 'text-sky-600'}`} />
+              <div className="w-4 h-4 shrink-0 flex items-center justify-center">
+                <ServiceDisciplineLogo serviceId={srv.id} className="w-4 h-4 rounded-sm" />
+              </div>
               <span>{srv.title}</span>
             </button>
           );
@@ -88,8 +74,7 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
 
       {/* Services Grid Cards */}
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredServices.map((service) => {
-          const Icon = ICONS[service.iconName] || Building2;
+        {displayedServices.map((service) => {
           return (
             <div
               key={service.id}
@@ -100,14 +85,10 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
               }`}
             >
               <div>
-                {/* Top Badge & Icon */}
+                {/* Top Badge & Relevant Logo on Left Side of Box */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 border ${
-                    isDarkMode 
-                      ? 'bg-cyan-950/70 border-cyan-500/30 text-cyan-400' 
-                      : 'bg-sky-50 border-sky-100 text-sky-600'
-                  }`}>
-                    <Icon className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shrink-0 overflow-hidden shadow-xs">
+                    <ServiceDisciplineLogo serviceId={service.id} className="w-12 h-12" />
                   </div>
                   <span className={`px-2.5 py-1 rounded-md text-[11px] font-mono border ${
                     isDarkMode 
@@ -192,6 +173,23 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
         })}
       </div>
 
+      {/* Expand / Collapse All Disciplines Toggle */}
+      {activeTab === 'all' && allFiltered.length > 6 && (
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => setShowAllDisciplines(!showAllDisciplines)}
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold transition-all shadow-xs cursor-pointer border ${
+              isDarkMode 
+                ? 'bg-slate-900 border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800' 
+                : 'bg-white border-slate-300 text-slate-800 hover:border-sky-400 hover:bg-sky-50/50'
+            }`}
+          >
+            <span>{showAllDisciplines ? 'Show Featured 6 Disciplines' : `View All ${allFiltered.length} Engineering Disciplines (AutoCAD Works, QTO & As-Built)`}</span>
+            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAllDisciplines ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
+      )}
+
       {/* Detailed Service Specification Modal */}
       {inspectedService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -214,12 +212,8 @@ export const ServicesMatrix: React.FC<ServicesMatrixProps> = ({
 
             {/* Modal Header */}
             <div className="flex items-center gap-3.5">
-              <div className={`p-3 rounded-xl border ${
-                isDarkMode 
-                  ? 'bg-cyan-950 border-cyan-500/30 text-cyan-400' 
-                  : 'bg-sky-50 border-sky-100 text-sky-600'
-              }`}>
-                {React.createElement(ICONS[inspectedService.iconName] || Building2, { className: 'w-6 h-6' })}
+              <div className="w-14 h-14 rounded-2xl shrink-0 overflow-hidden shadow-xs flex items-center justify-center">
+                <ServiceDisciplineLogo serviceId={inspectedService.id} className="w-14 h-14" />
               </div>
               <div>
                 <span className={`text-xs font-mono uppercase font-semibold ${

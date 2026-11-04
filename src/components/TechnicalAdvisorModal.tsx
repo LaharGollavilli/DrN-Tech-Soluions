@@ -23,9 +23,9 @@ interface TechnicalAdvisorModalProps {
 
 const PRESET_QUERIES = [
   "Tell me about your Revit & BIM Training in Vizag",
+  "How do you convert Point Clouds to CAD (Scan-to-CAD)?",
   "How do you synchronize 2D CAD with Revit Coordinates?",
-  "What parameters are embedded in LOD 350 families?",
-  "How are Navisworks clash reports structured?"
+  "What parameters are embedded in LOD 350 families?"
 ];
 
 const KNOWLEDGE_BASE: Record<string, string> = {
@@ -34,8 +34,9 @@ const KNOWLEDGE_BASE: Record<string, string> = {
   "parameters": "Our Revit families are enriched with UniFormat II and OmniClass Table 21 classifications, material fire/acoustic ratings, structural concrete grades (M25 to M40), rebar specifications (Fe500D), and dimensional parameters. This ensures direct bidirectional extraction into Bill of Quantities (BOQ).",
   "clash": "Using Autodesk Navisworks Manage, we execute multi-tier interference audits prioritizing trade gravity lines, HVAC ducts, structural concrete/steel frames, and cable trays. We filter false-positive insulation touchpoints and publish tracked BCF (BIM Collaboration Format) issue logs for weekly coordination reviews.",
   "bbs": "Yes! We model parametric 3D structural reinforcement down to individual bar mark shapes, hook bends, and lap lengths adhering to IS 456 / SP 34 / ACI 318 standards. Fabrication-ready Bar Bending Schedules (BBS) with total tonnage breakdowns are dynamically extracted directly from Revit.",
-  "scantobim": "Yes! Dharani Tech Solutions handles advanced Scan-to-BIM and CAD-to-BIM modeling. We convert 3D laser scan point clouds (.rcp, .rcs, .e57, .las) and 2D CAD DWG drawings into parametric Revit models (LOD 200–400) for as-built verification, renovations, and clash-free execution. Contact +91 8985829579 or info@drntechsolutions.in for a custom engineering quote.",
-  "general": "Dharani Tech Solutions delivers virtual building planning, 3D architectural visualization, LOD 100–400 Revit BIM modeling, Scan-to-BIM point cloud processing, CAD-to-BIM conversion, and professional Revit & BIM Training from our Visakhapatnam engineering office. How can our modeling engineers or trainers assist you?"
+  "scantocad": "Our Scan-to-CAD service converts 3D laser scan point clouds (.rcp, .rcs, .e57, .las) directly into precise 2D AutoCAD (.DWG) as-built drawings. We extract millimeter-accurate floor plans, exterior facade elevations, transverse sections, and reflected ceiling plans with standardized AIA/ISO layers, capturing true wall bows and structural deviations without requiring a full Revit BIM model.",
+  "scantobim": "Yes! Dharani Tech Solutions handles advanced Scan-to-BIM, Scan-to-CAD, and CAD-to-BIM services. We convert 3D laser scan point clouds (.rcp, .rcs, .e57, .las) and 2D CAD DWG drawings into parametric Revit models (LOD 200–400) or clean 2D AutoCAD sheets for as-built verification, renovations, and clash-free execution. Contact +91 8985829579 or info@drntechsolutions.in for a custom engineering quote.",
+  "general": "Dharani Tech Solutions delivers virtual building planning, 3D architectural visualization, LOD 100–400 Revit BIM modeling, Scan-to-CAD 2D drafting, Scan-to-BIM point cloud processing, CAD-to-BIM conversion, and professional Revit & BIM Training from our Visakhapatnam engineering office. How can our modeling engineers or trainers assist you?"
 };
 
 export const TechnicalAdvisorModal: React.FC<TechnicalAdvisorModalProps> = ({ 
@@ -86,6 +87,8 @@ export const TechnicalAdvisorModal: React.FC<TechnicalAdvisorModalProps> = ({
 
       if (lower.includes('training') || lower.includes('course') || lower.includes('demo') || lower.includes('class') || lower.includes('student') || lower.includes('learn')) {
         reply = KNOWLEDGE_BASE.training;
+      } else if (lower.includes('scan to cad') || lower.includes('scan-to-cad') || lower.includes('point cloud to cad') || lower.includes('cloud to cad')) {
+        reply = KNOWLEDGE_BASE.scantocad;
       } else if (lower.includes('scan') || lower.includes('point cloud') || lower.includes('laser') || lower.includes('as-built') || lower.includes('cad to bim')) {
         reply = KNOWLEDGE_BASE.scantobim;
       } else if (lower.includes('coordinate') || lower.includes('north') || lower.includes('shared') || lower.includes('benchmark')) {

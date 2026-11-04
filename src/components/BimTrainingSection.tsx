@@ -21,10 +21,62 @@ import {
   HelpCircle,
   MessageSquare,
   Send,
-  ExternalLink
+  ExternalLink,
+  Copy,
+  Check,
+  ChevronDown
 } from 'lucide-react';
 import { RevitLogo, NavisworksLogo, AutoCadLogo, RecapLogo } from './SoftwareLogos';
-import { formatTrainingNotification } from '../utils/notificationService';
+import { 
+  formatTrainingNotification, 
+  triggerServerNotification, 
+  ServerNotificationResult 
+} from '../utils/notificationService';
+
+const TRAINING_MODULES = [
+  {
+    num: 1,
+    title: 'Complete BIM Workflow & Project Lifecycle',
+    badge: 'Lifecycle Overview',
+    desc: 'Understand the full journey from initial Architectural Concept, Schematic Modeling, Detailed Design Development, Construction Documentation, through to As-Built Handover.',
+    tags: ['Concept to Construction', 'BIM Execution Plan (BEP)', 'Common Data Environment (CDE)', 'IFC Formats']
+  },
+  {
+    num: 2,
+    title: 'BIM Forms & LOD Standards (LOD 100 to 400)',
+    badge: 'Standards & LOD',
+    desc: 'Master industry Level of Development specifications: LOD 100 (Conceptual Massing), LOD 200 (Approximate Geometry), LOD 300 (Specific Assemblies), and LOD 350/400 (Fabrication & Coordination Detailing).',
+    tags: ['LOD 100-400 Deep Dive', 'Geometric vs Non-Geometric Data', 'Model Integrity Checks', 'AEC Industry Standards']
+  },
+  {
+    num: 3,
+    title: 'Revit Architecture 3D Modeling & Parametric Families',
+    badge: 'Autodesk Revit',
+    desc: 'Comprehensive modeling of walls, curtain walls, doors, windows, multi-level stairs, roofs, floors, parametric custom family creation, annotations, view templates, and sheet generation.',
+    tags: ['Parametric Families', 'Floor Plans & Sections', 'Sheet Composition', 'Architectural BOQ & Schedules']
+  },
+  {
+    num: 4,
+    title: 'Revit Structure 3D Modeling & Rebar Detailing',
+    badge: 'Autodesk Revit',
+    desc: 'Structural framing modeling: isolated/combined footings, RC columns, beams, slabs, concrete rebar reinforcement detailing with standard hooks/bends, structural steel framing, and bar bending schedules (BBS).',
+    tags: ['RC Columns & Beams', 'Concrete Rebar Detailing', 'Bar Bending Schedules (BBS)', 'Structural Coordination']
+  },
+  {
+    num: 5,
+    title: 'Navisworks Clash Detection & BIM Coordination',
+    badge: 'Navisworks Manage',
+    desc: 'Federate multi-disciplinary models, configure the Clash Detective matrix, execute hard & clearance clash tests, filter tolerances, assign issues, and export formal clash identification reports.',
+    tags: ['Federated Coordination', 'Clash Detective Matrix', 'Hard & Soft Clashes', 'HTML/PDF Clash Reports']
+  },
+  {
+    num: 6,
+    title: 'Scan-to-BIM & Point Cloud to Revit Modeling',
+    badge: 'ReCap Pro & Revit',
+    desc: 'Master in-demand Reality Capture workflows: ingesting 3D laser scan datasets (.RCP, .RCS, .E57), noise cleanup and registration in Autodesk ReCap Pro, linking point clouds into Revit by Shared Coordinates, surface fitting, and authoring millimeter-accurate as-built architectural & structural models.',
+    tags: ['Autodesk ReCap Pro', 'Point Cloud Ingestion (.RCP/.RCS)', 'Scan-to-CAD (Point Cloud to 2D DWG)', 'As-Built Revit Modeling', 'Deviation Analysis', 'Retrofit & Renovation BIM']
+  }
+];
 
 interface BimTrainingSectionProps {
   isDarkMode: boolean;
@@ -32,6 +84,10 @@ interface BimTrainingSectionProps {
 
 export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMode }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [copiedWhatsApp, setCopiedWhatsApp] = useState(false);
+  const [serverReceipt, setServerReceipt] = useState<ServerNotificationResult | null>(null);
+  const [selectedModuleIndex, setSelectedModuleIndex] = useState(0);
+  const [showAllModules, setShowAllModules] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -41,14 +97,70 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
     interestedTrack: 'Complete Revit & BIM Masterclass (Arch + Str + Navisworks)'
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleCopyWhatsApp = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedWhatsApp(true);
+    setTimeout(() => setCopiedWhatsApp(false), 3500);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone) return;
+
+    const payload = {
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email,
+      qualification: formData.qualification,
+      preferredBatch: formData.preferredBatch,
+      interestedTrack: formData.interestedTrack
+    };
+
+    // 1. Direct Web3Forms submission (Training & Scope Key)
+    try {
+      const web3FormData = new FormData();
+      web3FormData.append('access_key', 'a9576476-752e-4557-bdf6-1f88189baa45');
+      web3FormData.append('subject', `New BIM Training Demo Registration: ${payload.fullName}`);
+      web3FormData.append('from_name', 'Dharani Tech Solutions Academy');
+      web3FormData.append('name', payload.fullName);
+      web3FormData.append('email', payload.email || 'no-email-provided@drntechsolutions.in');
+      web3FormData.append('phone', payload.phone);
+      web3FormData.append('qualification', payload.qualification);
+      web3FormData.append('preferred_batch', payload.preferredBatch);
+      web3FormData.append('course_track', payload.interestedTrack);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: web3FormData
+      }).catch((err) => console.warn('Web3Forms dispatch error:', err));
+    } catch (err) {
+      console.warn('Web3Forms exception:', err);
+    }
+
+    // 2. Automated server-side email notification to info@drntechsolutions.in & hr@drntechsolutions.in
+    triggerServerNotification('/api/notifications/training', payload)
+      .then((receipt) => {
+        setServerReceipt(receipt);
+      })
+      .catch((err) => {
+        console.warn('Server training notification handled:', err);
+      });
+
+    // 3. Client-side mailto protocol fallback
+    const notif = formatTrainingNotification(payload);
+    try {
+      window.location.href = notif.mailtoUrl;
+    } catch {
+      // browser fallback
+    }
+
     setFormSubmitted(true);
   };
 
   const resetForm = () => {
     setFormSubmitted(false);
+    setServerReceipt(null);
+    setCopiedWhatsApp(false);
     setFormData({
       fullName: '',
       phone: '',
@@ -227,223 +339,138 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
             </div>
           </div>
 
-          {/* Core Modules Accordion / Cards (Directly matching brochure) */}
-          <div className="space-y-3">
-            <h3 className={`text-sm font-mono uppercase tracking-wider font-bold ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}>
-              Comprehensive Course Curriculum & Modules
-            </h3>
-
-            {/* Module 1 */}
-            <div className={`p-4 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                  1
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      Complete BIM Workflow & Project Lifecycle
-                    </h4>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                      isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
-                    }`}>
-                      Lifecycle Overview
-                    </span>
-                  </div>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Understand the full journey from initial Architectural Concept, Schematic Modeling, Detailed Design Development, Construction Documentation, through to As-Built Handover.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {['Concept to Construction', 'BIM Execution Plan (BEP)', 'Common Data Environment (CDE)', 'IFC Formats'].map((tag, i) => (
-                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
-                      }`}>
-                        ✓ {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+          {/* Core Modules Interactive Track Explorer */}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h3 className={`text-sm font-mono uppercase tracking-wider font-bold ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}>
+                Course Curriculum Modules
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowAllModules(!showAllModules)}
+                className="text-xs font-semibold text-sky-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
+              >
+                <span>{showAllModules ? 'Switch to Compact View' : 'View All 6 Modules'}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showAllModules ? 'rotate-180' : ''}`} />
+              </button>
             </div>
 
-            {/* Module 2 */}
-            <div className={`p-4 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                  2
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      BIM Forms & LOD Standards (LOD 100 to 400)
-                    </h4>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                      isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
+            {/* Module Selector Tabs */}
+            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+              {TRAINING_MODULES.map((mod, idx) => {
+                const isSelected = selectedModuleIndex === idx;
+                return (
+                  <button
+                    key={mod.num}
+                    type="button"
+                    onClick={() => {
+                      setSelectedModuleIndex(idx);
+                      setShowAllModules(false);
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-1.5 ${
+                      isSelected && !showAllModules
+                        ? 'bg-sky-600 text-white border-sky-600 shadow-xs'
+                        : isDarkMode
+                        ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <span className={`w-4 h-4 rounded-full text-center text-[10px] flex items-center justify-center font-bold ${
+                      isSelected && !showAllModules ? 'bg-white/20 text-white' : 'bg-slate-700/20'
                     }`}>
-                      Standards & LOD
+                      {mod.num}
                     </span>
-                  </div>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Master industry Level of Development specifications: LOD 100 (Conceptual Massing), LOD 200 (Approximate Geometry), LOD 300 (Specific Assemblies), and LOD 350/400 (Fabrication & Coordination Detailing).
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {['LOD 100-400 Deep Dive', 'Geometric vs Non-Geometric Data', 'Model Integrity Checks', 'AEC Industry Standards'].map((tag, i) => (
-                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
-                      }`}>
-                        ✓ {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                    <span>{mod.title.split(' ')[0]} {mod.title.split(' ')[1]}</span>
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Module 3 */}
-            <div className={`p-4 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                  3
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      Revit Architecture 3D Modeling & Parametric Families
-                    </h4>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                      isDarkMode ? 'bg-slate-800 text-cyan-300 border-cyan-500/30' : 'bg-sky-50 text-sky-700 border-sky-200'
-                    }`}>
-                      Autodesk Revit
-                    </span>
-                  </div>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Comprehensive modeling of walls, curtain walls, doors, windows, multi-level stairs, roofs, floors, parametric custom family creation, annotations, view templates, and sheet generation.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {['Parametric Families', 'Floor Plans & Sections', 'Sheet Composition', 'Architectural BOQ & Schedules'].map((tag, i) => (
-                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
-                      }`}>
-                        ✓ {tag}
+            {/* Active Module Card (Spotlight) */}
+            {!showAllModules ? (
+              (() => {
+                const activeMod = TRAINING_MODULES[selectedModuleIndex];
+                return (
+                  <div className={`p-5 rounded-2xl border transition-all animate-in fade-in duration-200 ${
+                    isDarkMode ? 'bg-slate-900/90 border-slate-800 shadow-md' : 'bg-white border-slate-200 shadow-sm'
+                  }`}>
+                    <div className="flex items-start gap-3.5">
+                      <span className="w-8 h-8 rounded-xl bg-sky-600 text-white font-mono font-bold text-sm flex items-center justify-center shrink-0 shadow-xs">
+                        {activeMod.num}
                       </span>
-                    ))}
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                          <h4 className={`text-sm sm:text-base font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                            {activeMod.title}
+                          </h4>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-semibold ${
+                            isDarkMode ? 'bg-slate-800 text-cyan-300 border-cyan-500/30' : 'bg-sky-50 text-sky-700 border-sky-200'
+                          }`}>
+                            {activeMod.badge}
+                          </span>
+                        </div>
+                        <p className={`text-xs sm:text-sm leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                          {activeMod.desc}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                          {activeMod.tags.map((tag, i) => (
+                            <span key={i} className={`text-[10px] font-mono px-2.5 py-1 rounded-md ${
+                              isDarkMode ? 'bg-slate-800 text-cyan-300 border border-slate-700' : 'bg-sky-50 text-sky-800 border border-sky-100'
+                            }`}>
+                              ✓ {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Module 4 */}
-            <div className={`p-4 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                  4
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      Revit Structure 3D Modeling & Rebar Detailing
-                    </h4>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                      isDarkMode ? 'bg-slate-800 text-cyan-300 border-cyan-500/30' : 'bg-sky-50 text-sky-700 border-sky-200'
-                    }`}>
-                      Autodesk Revit
-                    </span>
-                  </div>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Structural framing modeling: isolated/combined footings, RC columns, beams, slabs, concrete rebar reinforcement detailing with standard hooks/bends, structural steel framing, and bar bending schedules (BBS).
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {['RC Columns & Beams', 'Concrete Rebar Detailing', 'Bar Bending Schedules (BBS)', 'Structural Coordination'].map((tag, i) => (
-                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
-                      }`}>
-                        ✓ {tag}
+                );
+              })()
+            ) : (
+              /* All 6 Modules Grid */
+              <div className="space-y-3">
+                {TRAINING_MODULES.map((mod) => (
+                  <div
+                    key={mod.num}
+                    className={`p-4 rounded-2xl border transition-all ${
+                      isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                        {mod.num}
                       </span>
-                    ))}
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                            {mod.title}
+                          </h4>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                            isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
+                          }`}>
+                            {mod.badge}
+                          </span>
+                        </div>
+                        <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                          {mod.desc}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {mod.tags.map((tag, i) => (
+                            <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+                              isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
+                            }`}>
+                              ✓ {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            </div>
-
-            {/* Module 5 */}
-            <div className={`p-4 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                  5
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      Navisworks Clash Detection & BIM Coordination
-                    </h4>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                      isDarkMode ? 'bg-slate-800 text-amber-300 border-amber-500/30' : 'bg-amber-50 text-amber-800 border-amber-200'
-                    }`}>
-                      Navisworks Manage
-                    </span>
-                  </div>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Federate multi-disciplinary models, configure the Clash Detective matrix, execute hard & clearance clash tests, filter tolerances, assign issues, and export formal clash identification reports.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {['Federated Coordination', 'Clash Detective Matrix', 'Hard & Soft Clashes', 'HTML/PDF Clash Reports'].map((tag, i) => (
-                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
-                      }`}>
-                        ✓ {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Module 6: Scan-to-BIM & Point Cloud Reality Capture */}
-            <div className={`p-4 rounded-2xl border transition-all ${
-              isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-lg bg-sky-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                  6
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      Scan-to-BIM & Point Cloud to Revit Modeling
-                    </h4>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                      isDarkMode ? 'bg-slate-800 text-fuchsia-400 border-fuchsia-500/30' : 'bg-fuchsia-50 text-fuchsia-800 border-fuchsia-200'
-                    }`}>
-                      ReCap Pro & Revit
-                    </span>
-                  </div>
-                  <p className={`text-xs mt-1.5 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Master in-demand Reality Capture workflows: ingesting 3D laser scan datasets (.RCP, .RCS, .E57), noise cleanup and registration in Autodesk ReCap Pro, linking point clouds into Revit by Shared Coordinates, surface fitting, and authoring millimeter-accurate as-built architectural & structural models.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {['Autodesk ReCap Pro', 'Point Cloud Ingestion (.RCP/.RCS)', 'As-Built Revit Modeling', 'Deviation Analysis', 'Retrofit & Renovation BIM'].map((tag, i) => (
-                      <span key={i} className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                        isDarkMode ? 'bg-slate-800 text-cyan-300' : 'bg-sky-50 text-sky-800'
-                      }`}>
-                        ✓ {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Software Covered Official Badges */}
@@ -571,8 +598,13 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                       }`}>
                         <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 mb-1.5">
                           <span>NOTIFICATIONS DESTINATION</span>
-                          <span className="text-emerald-500 font-bold">READY TO DISPATCH</span>
+                          <span className="text-emerald-500 font-bold">AUTOMATED DISPATCH</span>
                         </div>
+                        {serverReceipt && (
+                          <div className="mb-2 py-0.5 px-2 rounded bg-emerald-500/10 border border-emerald-500/30 text-[10.5px] font-mono text-emerald-600 dark:text-emerald-400">
+                            ✓ Server Dispatched • Ref: {serverReceipt.messageId}
+                          </div>
+                        )}
                         <div className="space-y-1 text-[11px] font-mono">
                           <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
                             <Mail className="w-3.5 h-3.5 text-sky-500 shrink-0" />
@@ -585,29 +617,53 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                         </div>
                       </div>
 
-                      <div className="flex flex-col gap-2">
+                      {/* Unified Professional Action Buttons */}
+                      <div className="space-y-2.5">
+                        {/* Primary WhatsApp Direct Chat CTA */}
                         <a
                           href={notif.whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
+                          className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer"
+                          title="Open WhatsApp chat directly with training coordinator (+91 8985829579)"
                         >
-                          <MessageSquare className="w-4 h-4" />
-                          <span>Alert Coordinator via WhatsApp</span>
+                          <MessageSquare className="w-4 h-4 fill-current" />
+                          <span>Open in WhatsApp (+91 8985829579)</span>
                         </a>
 
-                        <a
-                          href={notif.mailtoUrl}
-                          className={`w-full py-2.5 px-4 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-all ${
-                            isDarkMode
-                              ? 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border-cyan-500/30'
-                              : 'bg-white hover:bg-slate-50 text-sky-700 border-sky-300 shadow-xs'
-                          }`}
-                        >
-                          <Send className="w-4 h-4 text-sky-500" />
-                          <span>Send Registration Email</span>
-                          <ExternalLink className="w-3.5 h-3.5 opacity-60 ml-auto" />
-                        </a>
+                        {/* Secondary Actions Row: Copy Details & Direct Email */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleCopyWhatsApp(notif.messageText)}
+                            className={`py-2.5 px-3 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 transition-all border cursor-pointer ${
+                              copiedWhatsApp
+                                ? 'bg-emerald-50 border-emerald-300 text-emerald-800 dark:bg-emerald-950/40 dark:border-emerald-700 dark:text-emerald-300'
+                                : isDarkMode
+                                  ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
+                                  : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                            }`}
+                            title="Copy registration particulars to clipboard"
+                          >
+                            {copiedWhatsApp ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                            <span>{copiedWhatsApp ? 'Copied Details!' : 'Copy to WhatsApp'}</span>
+                          </button>
+
+                          <a
+                            href={notif.mailtoUrl}
+                            className="py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-500 active:scale-[0.99] text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-xs"
+                            title="Send inquiry email to info@drntechsolutions.in"
+                          >
+                            <Send className="w-4 h-4" />
+                            <span>Email Desk</span>
+                          </a>
+                        </div>
+
+                        {copiedWhatsApp && (
+                          <div className="text-[11px] font-mono text-center text-emerald-600 dark:text-emerald-400 animate-in fade-in pt-0.5">
+                            ✓ Registration details copied! Ready to paste into WhatsApp (+91 8985829579).
+                          </div>
+                        )}
                       </div>
 
                       <div className="text-center pt-2">
@@ -623,13 +679,24 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                 })()}
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3.5">
+              <form 
+                action="https://api.web3forms.com/submit" 
+                method="POST" 
+                onSubmit={handleSubmit} 
+                className="space-y-3.5"
+              >
+                {/* Web3Forms Configuration */}
+                <input type="hidden" name="access_key" value="a9576476-752e-4557-bdf6-1f88189baa45" />
+                <input type="hidden" name="subject" value={`New BIM Training Demo Registration: ${formData.fullName || 'Candidate'}`} />
+                <input type="hidden" name="from_name" value="Dharani Tech Solutions Academy" />
+
                 <div>
                   <label className={`block text-xs font-semibold mb-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                     Full Name *
                   </label>
                   <input
                     type="text"
+                    name="name"
                     required
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -649,6 +716,7 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     </label>
                     <input
                       type="tel"
+                      name="phone"
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -667,6 +735,7 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     </label>
                     <input
                       type="email"
+                      name="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="name@example.com"
@@ -684,6 +753,7 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     Current Qualification / Role
                   </label>
                   <select
+                    name="qualification"
                     value={formData.qualification}
                     onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl border text-xs transition-colors outline-hidden ${
@@ -706,6 +776,7 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     Preferred Batch Timing
                   </label>
                   <select
+                    name="preferred_batch"
                     value={formData.preferredBatch}
                     onChange={(e) => setFormData({ ...formData, preferredBatch: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl border text-xs transition-colors outline-hidden ${
@@ -725,6 +796,7 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     Interested Course Track
                   </label>
                   <select
+                    name="course_track"
                     value={formData.interestedTrack}
                     onChange={(e) => setFormData({ ...formData, interestedTrack: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl border text-xs transition-colors outline-hidden ${
@@ -744,6 +816,9 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     </option>
                     <option value="Navisworks Clash Detection & Coordination Masterclass">
                       Navisworks Clash Detection & Coordination Masterclass
+                    </option>
+                    <option value="Scan-to-BIM & Scan-to-CAD Point Cloud Masterclass (ReCap Pro + AutoCAD)">
+                      Scan-to-BIM & Scan-to-CAD Point Cloud Masterclass (ReCap Pro + AutoCAD)
                     </option>
                   </select>
                 </div>
@@ -789,7 +864,7 @@ export const BimTrainingSection: React.FC<BimTrainingSectionProps> = ({ isDarkMo
                     Call: <a href="tel:8985829579" className="font-bold hover:underline text-sky-600 dark:text-cyan-400">+91 8985829579</a>
                   </span>
                   <span>
-                    Landline: <a href="tel:08914630073" className="font-bold hover:underline">0891-4630073</a>
+                    Landline: <a href="tel:08914630073" className="font-bold hover:underline text-sky-600 dark:text-cyan-400">0891-4630073</a>
                   </span>
                 </div>
               </div>

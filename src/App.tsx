@@ -6,13 +6,15 @@ import { ServicesMatrix } from './components/ServicesMatrix';
 import { SoftwareEcosystem } from './components/SoftwareEcosystem';
 import { BimTrainingSection } from './components/BimTrainingSection';
 import { LodSpectrum } from './components/LodSpectrum';
+import { ProjectPortfolio } from './components/ProjectPortfolio';
 import { CareersSection } from './components/CareersSection';
 import { QuoteEstimator } from './components/QuoteEstimator';
 import { StandardsAndFaq } from './components/StandardsAndFaq';
+import { QuickJumpDock } from './components/QuickJumpDock';
 import { Footer } from './components/Footer';
 import { TechnicalAdvisorModal } from './components/TechnicalAdvisorModal';
 import { ArchitecturalBackgroundOverlay } from './components/ArchitecturalBackgroundOverlay';
-import { Discipline } from './types/bim';
+import { Discipline, LodLevel } from './types/bim';
 import { Layers, Sliders, Briefcase, ArrowRight, GraduationCap } from 'lucide-react';
 
 export default function App() {
@@ -72,6 +74,19 @@ export default function App() {
     }
   };
 
+  const handleSelectProjectForQuote = (_lod?: LodLevel, _discipline?: string) => {
+    if (activeView !== 'home') {
+      setActiveView('home');
+      setTimeout(() => {
+        const el = document.getElementById('quote-estimator');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById('quote-estimator');
+      el?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className={`min-h-screen w-full max-w-full overflow-x-hidden relative transition-colors duration-300 ${
       isDarkMode 
@@ -108,44 +123,6 @@ export default function App() {
              MAIN SERVICES & CLIENT LANDING PAGE VIEW
              ============================================================ */
           <div className="animate-in fade-in duration-300 w-full max-w-full overflow-x-hidden">
-            {/* Dual Announcement Banner: Hiring & BIM Training Admissions Open */}
-            <div className={`border-b transition-colors py-2 px-3 sm:px-4 text-center text-[11px] sm:text-xs w-full max-w-full ${
-              isDarkMode 
-                ? 'bg-sky-950/40 border-slate-800 text-sky-200' 
-                : 'bg-sky-50 border-sky-100 text-sky-900'
-            }`}>
-              <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 sm:gap-4 flex-wrap leading-normal px-2">
-                {/* BIM Training Academy Highlight */}
-                <div className="flex items-center justify-center gap-1.5 flex-wrap sm:flex-nowrap text-center">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">Revit & BIM Training:</span>
-                  <span>Admissions Open (Civil & Arch)</span>
-                  <a
-                    href="#bim-training"
-                    className="font-bold text-sky-600 dark:text-cyan-400 hover:underline inline-flex items-center gap-0.5 cursor-pointer ml-0.5"
-                  >
-                    <span>View Syllabus</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </a>
-                </div>
-
-                <span className="hidden md:inline text-slate-300 dark:text-slate-700">|</span>
-
-                {/* Careers Highlight */}
-                <div className="flex items-center justify-center gap-1.5 flex-wrap sm:flex-nowrap text-center">
-                  <Briefcase className="w-3.5 h-3.5 text-sky-600 shrink-0" />
-                  <span>Hiring in Vizag: <strong>BIM Interns & Modelers</strong></span>
-                  <button
-                    onClick={() => navigateToView('careers')}
-                    className="font-bold text-sky-600 dark:text-cyan-400 hover:underline inline-flex items-center gap-0.5 cursor-pointer ml-0.5"
-                  >
-                    <span>View Jobs</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
             {/* Hero Section */}
             <Hero 
               isDarkMode={isDarkMode} 
@@ -179,6 +156,12 @@ export default function App() {
 
               <ServicesMatrix isDarkMode={isDarkMode} onSelectServiceForQuote={handleSelectServiceForQuote} />
             </section>
+
+            {/* SECTION: Past Architectural & BIM Project Portfolio (LOD 100–400) */}
+            <ProjectPortfolio 
+              isDarkMode={isDarkMode} 
+              onSelectProjectForQuote={handleSelectProjectForQuote} 
+            />
 
             {/* SECTION 2: Industry-Standard Software Ecosystem */}
             <SoftwareEcosystem isDarkMode={isDarkMode} />
@@ -228,6 +211,14 @@ export default function App() {
       <div className="relative z-20">
         <Footer isDarkMode={isDarkMode} />
       </div>
+
+      {/* Floating Quick Jump Dock (Effortless Navigation & Back-to-Top - ONLY on Home view) */}
+      {activeView === 'home' && (
+        <QuickJumpDock 
+          isDarkMode={isDarkMode} 
+          onNavigateCareers={() => navigateToView('careers')} 
+        />
+      )}
 
       {/* Floating BIM Engineering Assistant Modal - Adapts Dynamically to Theme */}
       <TechnicalAdvisorModal isDarkMode={isDarkMode} />

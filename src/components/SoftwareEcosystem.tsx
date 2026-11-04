@@ -16,7 +16,6 @@ import {
   AccLogo,
   Bim360Logo,
   AutoCadLogo,
-  DynamoLogo,
   RecapLogo
 } from './SoftwareLogos';
 
@@ -34,8 +33,6 @@ export const renderSoftwareLogo = (id: string, className?: string) => {
       return <Bim360Logo className={className} />;
     case 'autocad':
       return <AutoCadLogo className={className} />;
-    case 'dynamo':
-      return <DynamoLogo className={className} />;
     default:
       return null;
   }
@@ -136,24 +133,10 @@ const softwares: SoftwareItem[] = [
     iconBg: 'from-red-600 to-rose-700',
     badgeColor: 'text-rose-500 border-rose-500/30 bg-rose-500/10',
     description: 'The global benchmark for computer-aided drafting, statutory approval drawings, and structural details.',
-    howWeUseIt: 'We create municipal sanction drawings, architectural working layouts, structural reinforcement bar bending details, and perform CAD-to-BIM conversion from legacy paper blueprints and DWGs into clean digital assets.',
-    deliverables: ['Architectural Working Plans & Elevations', 'Structural Reinforcement Details', 'CAD-to-BIM Conversion DWG Packages', 'Municipal Submission Sets'],
+    howWeUseIt: 'We create municipal sanction drawings, architectural working layouts, structural reinforcement bar bending details, AutoCAD Rebar Detailing & BBS, and perform CAD-to-BIM conversion from legacy paper blueprints and DWGs into clean digital assets.',
+    deliverables: ['Architectural Working Plans & Elevations', 'Structural Reinforcement Details & BBS', 'CAD-to-BIM Conversion DWG Packages', 'Municipal Submission Sets'],
     keyBenefit: 'Absolute drafting precision with millimeter accuracy, verified layer standards, and universal compatibility across all contractors.',
     formats: ['.DWG', '.DXF', '.DWF', '.PDF']
-  },
-  {
-    id: 'dynamo',
-    name: 'Dynamo BIM & Custom Scripts',
-    shortName: 'Dynamo & Python',
-    vendor: 'Autodesk / Open Source',
-    category: 'Parametric Automation & Model Auditing',
-    iconBg: 'from-emerald-600 to-teal-800',
-    badgeColor: 'text-emerald-500 border-emerald-500/30 bg-emerald-500/10',
-    description: 'Visual programming and custom algorithmic scripts for high-speed modeling workflows and data extraction.',
-    howWeUseIt: 'Our engineers run custom Dynamo scripts to audit model health, automatically populate element parameters, batch-generate floor plans and sections, and extract accurate reinforcement schedules directly into Excel.',
-    deliverables: ['Automated Model Health Audit Reports', 'Algorithmic Sheet Generation Scripts', 'Custom Parameter Mapping Routines', 'Automated Quantity Extraction Data'],
-    keyBenefit: 'Reduces turnaround time on repetitive modeling tasks by up to 60% while eliminating human data-entry errors.',
-    formats: ['.DYN', '.PYTHON', '.JSON', '.XLSX']
   }
 ];
 
@@ -186,7 +169,7 @@ export const SoftwareEcosystem: React.FC<{ isDarkMode?: boolean }> = ({ isDarkMo
       </div>
 
       {/* Software Badges Grid - Clickable & Interactive */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
         {softwares.map((sw) => {
           const isSelected = selectedSoftware.id === sw.id;
           return (
